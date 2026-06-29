@@ -1,0 +1,19 @@
+{
+  "fields": [
+    {
+      "path": "candidate_id"
+    },
+    {
+      "path": "full_name"
+    },
+    {
+      "path": "emails"
+    },
+    {
+      "path": "skills"
+    }
+  ],
+
+  "include_confidence": true,
+  "include_provenance": true
+}

@@ -1,0 +1,84 @@
+{
+  "candidate_id": "8f4e76e1359002c69d634f7eaaa028a8",
+  "full_name": "Kruthin Reddy",
+  "emails": [
+    "kruthin@gmail.com",
+    "kruthinreddy95@gmail.com"
+  ],
+  "skills": [
+    {
+      "name": "Python",
+      "confidence": 0.95,
+      "sources": [
+        "ats_json",
+        "resume_docx"
+      ],
+      "agreement_count": 2
+    },
+    {
+      "name": "Git",
+      "confidence": 0.95,
+      "sources": [
+        "ats_json",
+        "resume_docx"
+      ],
+      "agreement_count": 2
+    },
+    {
+      "name": "SQL",
+      "confidence": 0.85,
+      "sources": [
+        "ats_json"
+      ],
+      "agreement_count": 1
+    },
+    {
+      "name": "Java",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ],
+      "agreement_count": 1
+    },
+    {
+      "name": "MySQL",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ],
+      "agreement_count": 1
+    },
+    {
+      "name": "GitHub",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ],
+      "agreement_count": 1
+    },
+    {
+      "name": "HTML",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ],
+      "agreement_count": 1
+    },
+    {
+      "name": "CSS",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ],
+      "agreement_count": 1
+    }
+  ],
+  "overall_confidence": 0.81,
+  "provenance": [
+    {
+      "field": "full_name",
+      "source": "ats_json",
+      "method": "highest_confidence"
+    }
+  ]
+}
