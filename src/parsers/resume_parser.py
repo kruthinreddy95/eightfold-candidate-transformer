@@ -201,7 +201,10 @@ def parse_experience_section(lines):
     current_exp = None
     
     date_regex = r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4}\s*(?:-|–|to)\s*(?:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4}|Present|Current)\b"
+    single_date_regex = r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4}\b"
     year_span_regex = r"\b(20\d{2}|19\d{2})\s*(?:-|–|to)\s*(?:(20\d{2}|19\d{2})|Present|Current)\b"
+    
+    job_keywords = ["intern", "developer", "engineer", "designer", "analyst", "lead", "manager", "architect", "specialist", "consultant", "ambassador", "executive"]
     
     for line in lines:
         cleaned = line.strip()
@@ -209,6 +212,10 @@ def parse_experience_section(lines):
             continue
             
         date_match = re.search(date_regex, cleaned, re.IGNORECASE) or re.search(year_span_regex, cleaned, re.IGNORECASE)
+        single_date_match = re.search(single_date_regex, cleaned, re.IGNORECASE)
+        
+        is_bullet = cleaned.startswith(("-", "•", "*"))
+        is_job_title = any(k in cleaned.lower() for k in job_keywords) and len(cleaned.split()) < 8 and not is_bullet
         
         is_new_exp = False
         title = None
@@ -227,10 +234,13 @@ def parse_experience_section(lines):
                     company = company.replace(date_str, "").strip()
                 title = title.replace(date_str, "").strip()
             is_new_exp = True
-        elif date_match:
+        elif date_match and not is_bullet:
             date_str = date_match.group(0)
             parts = cleaned.split(date_str)
             title = parts[0].strip()
+            is_new_exp = True
+        elif is_job_title:
+            title = cleaned
             is_new_exp = True
             
         if is_new_exp:
@@ -242,6 +252,9 @@ def parse_experience_section(lines):
                 dates = [d.strip() for d in re.split(r'-|–|to', date_str)]
                 start_date = dates[0]
                 end_date = dates[1] if len(dates) > 1 else "Present"
+            elif single_date_match:
+                start_date = single_date_match.group(0)
+                end_date = "Present"
                 
             if title:
                 title = re.sub(r'\s+', ' ', title).strip()
@@ -257,11 +270,18 @@ def parse_experience_section(lines):
             }
         else:
             if current_exp:
-                cleaned_bullet = re.sub(r'^[\*\-\•\s]+', '', cleaned).strip()
-                if current_exp["summary"]:
-                    current_exp["summary"] += "\n" + cleaned_bullet
+                if current_exp["company"] == "Unknown" and len(cleaned.split()) < 5 and not is_bullet and not single_date_match:
+                    current_exp["company"] = cleaned
+                elif single_date_match and not current_exp["start"]:
+                    date_str = single_date_match.group(0)
+                    current_exp["start"] = date_str
+                    current_exp["end"] = "Present"
                 else:
-                    current_exp["summary"] = cleaned_bullet
+                    cleaned_bullet = re.sub(r'^[\*\-\•\s]+', '', cleaned).strip()
+                    if current_exp["summary"]:
+                        current_exp["summary"] += "\n" + cleaned_bullet
+                    else:
+                        current_exp["summary"] = cleaned_bullet
                       
     if current_exp:
         experience.append(current_exp)

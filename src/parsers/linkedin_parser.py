@@ -41,7 +41,11 @@ def parse_linkedin(url):
             
     formatted_name = " ".join(name_parts)
     if formatted_name:
-        result["full_name"] = tagged(formatted_name)
+        result["full_name"] = {
+            "value": formatted_name,
+            "confidence": 0.40,
+            "source": SOURCE
+        }
         
     links_dict = {"linkedin": url, "github": None, "portfolio": None, "other": []}
     result["links"] = tagged(links_dict)
