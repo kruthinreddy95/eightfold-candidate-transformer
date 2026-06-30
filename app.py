@@ -36,9 +36,14 @@ html, body, [class*="css"] {
     font-family: "Open Sans", "Segoe UI", Roboto, Arial, sans-serif !important;
 }
 
-/* ── Page Background ───────────────────────────────────────────────── */
+/* ── Page Background & Spacing ────────────────────────────────────── */
 .stApp { background: #f4f8fb !important; }
-.block-container { padding: 1.5rem 2.5rem 3rem; max-width: 1400px; }
+.block-container { padding: 0rem 2.5rem 3rem !important; max-width: 1400px; }
+
+/* ── Hide Streamlit Default Header ────────────────────────────────── */
+header[data-testid="stHeader"] {
+    display: none !important;
+}
 
 /* ── SBI Header Navigation Bar ─────────────────────────────────────── */
 .portal-nav {
@@ -49,7 +54,7 @@ html, body, [class*="css"] {
     color: #ffffff;
     padding: 0 2.5rem;
     height: 54px;
-    margin: -1.5rem -2.5rem 0;
+    margin: 0 -2.5rem 0 !important;
     border-bottom: 4px solid #00b8df; /* SBI Cyan Accent */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
