@@ -1,4 +1,4 @@
-python-docx
-pdfplumber
-phonenumbers
-pydantic
+python-docx==1.2.0
+pdfplumber==0.11.10
+phonenumbers==9.0.33
+pydantic==2.13.4
