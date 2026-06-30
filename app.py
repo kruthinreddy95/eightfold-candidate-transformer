@@ -672,19 +672,6 @@ with result_col:
                 os.remove(tmp)
                 st.toast("Resume parsed")
 
-                if resume_profile and resume_profile.get("links") and resume_profile["links"].get("value"):
-                    r_links = resume_profile["links"]["value"]
-                    has_new = False
-                    if r_links.get("github") and not st.session_state.github_url_val.strip():
-                        gv = r_links["github"]
-                        st.session_state.github_url_val = gv if gv.startswith("http") else "https://" + gv
-                        has_new = True
-                    if r_links.get("linkedin") and not st.session_state.linkedin_url_val.strip():
-                        lv = r_links["linkedin"]
-                        st.session_state.linkedin_url_val = lv if lv.startswith("http") else "https://" + lv
-                        has_new = True
-                    if has_new:
-                        st.rerun()
             except Exception as e:
                 st.error(f"Resume parse failed: {e}")
 
@@ -707,11 +694,13 @@ with result_col:
                 github_to_parse = r_links["github"]
                 if not github_to_parse.startswith("http"):
                     github_to_parse = "https://" + github_to_parse
+                st.session_state.github_url_val = github_to_parse
                 st.info(f"Auto-detected GitHub from resume: {github_to_parse}")
             if not linkedin_to_parse and r_links.get("linkedin"):
                 linkedin_to_parse = r_links["linkedin"]
                 if not linkedin_to_parse.startswith("http"):
                     linkedin_to_parse = "https://" + linkedin_to_parse
+                st.session_state.linkedin_url_val = linkedin_to_parse
                 st.info(f"Auto-detected LinkedIn from resume: {linkedin_to_parse}")
 
         # GitHub
