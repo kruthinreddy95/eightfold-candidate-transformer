@@ -435,7 +435,6 @@ div[data-testid="stMetricLabel"] {
 hr { border-color: #e5e5e7 !important; margin: 1.25rem 0 !important; }
 </style>
 """, unsafe_allow_html=True)
-""", unsafe_allow_html=True)
 
 # ── Session state ──────────────────────────────────────────────────────────────
 if "github_url_val" not in st.session_state:
