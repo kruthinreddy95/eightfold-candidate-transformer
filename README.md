@@ -218,11 +218,21 @@ python3 -m src.main --ats data/ats.json --resume data/resume.docx --csv data/rec
 
 ### Running the Streamlit Web UI
 
-You can launch a local interactive web interface to upload files and see generated profiles:
+You can launch a local interactive web interface to upload files, configure projections, visualize confidence metrics, and manage candidates:
 
 ```bash
 streamlit run app.py
 ```
+
+#### Streamlit Features:
+1. **Interactive Ingestion**: Upload ATS JSON, recruiter CSVs, resume files, and recruiter notes. Auto-pastes links discovered in resumes directly into the URL fields.
+2. **State Contamination Protection (State Reset)**:
+   - Includes a **`⟳ New Candidate (Reset Inputs)`** action to instantly clear all uploaded files, text inputs, and session configurations.
+   - Automatically resets state keys and advances widget indices after running each ingestion pipeline, guaranteeing that data from Candidate A never bleeds into Candidate B's profile.
+3. **Talent Pool Database (SQLite)**:
+   - Fully persistence-backed candidate database showing aggregate metrics (total counts, average confidence, average experience).
+   - View, select, compare, and delete candidates directly from the SQLite store.
+   - Bulk download all ingested candidates in projected JSON formats.
 
 ### Running with Docker
 

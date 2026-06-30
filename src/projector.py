@@ -210,7 +210,21 @@ def project(profile, config):
 
         # Enforce spec-compliant object shapes
         if output_field in _SHAPE_ENFORCERS and val is not None:
-            val = _SHAPE_ENFORCERS[output_field](val)
+            should_enforce = True
+            if output_field in ("skills", "experience", "education", "provenance"):
+                # If the value is a list, but contains non-dict items (e.g. strings like in skills[].name),
+                # do not enforce the canonical list-of-dicts structure.
+                if isinstance(val, list):
+                    if len(val) > 0 and any(not isinstance(item, dict) for item in val if item is not None):
+                        should_enforce = False
+                else:
+                    should_enforce = False
+            elif output_field in ("location", "links"):
+                if not isinstance(val, dict):
+                    should_enforce = False
+            
+            if should_enforce:
+                val = _SHAPE_ENFORCERS[output_field](val)
 
         # Missing value handling
         is_missing = val is None or (isinstance(val, list) and len(val) == 0)

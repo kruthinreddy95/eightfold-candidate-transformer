@@ -15,7 +15,7 @@ class TestResumeParser(unittest.TestCase):
         self.assertIsNotNone(profile)
         # Check Name
         self.assertIn("full_name", profile)
-        self.assertEqual(profile["full_name"]["value"], "PILLIKANDLA KRUTHIN REDDY")
+        self.assertEqual(profile["full_name"]["value"], "Pillikandla Kruthin Reddy")
 
         # Check Email
         self.assertIn("emails", profile)
