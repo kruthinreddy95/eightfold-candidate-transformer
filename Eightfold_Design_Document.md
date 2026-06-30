@@ -62,7 +62,7 @@ Candidate Profile JSON
 
 ### 3. Merge Engine (`src/merger.py`)
 - **Conflict Resolution**: Resolves single-value fields (name, headline, location, years_experience) by picking the value from the source with the highest confidence score.
-- **List Union**: Resolves list-like fields (emails, phones) by combining unique values.
+- **Primary Contact Selection**: Resolves list-like fields (emails, phones) by selecting the primary contact detail from the highest confidence source, keeping it clean and recruiter-friendly.
 - **Skill Confidence Boosting**: For duplicate skills, selects the max source confidence and adds an `agreement_bonus` (default `+0.10`) for each independent source that contains the skill, up to `1.0`.
 - **Provenance**: Inserts `{ field, source, method }` for each resolved field.
 - **Deduplication**: Automatically groups and merges duplicate educational and experience entries.

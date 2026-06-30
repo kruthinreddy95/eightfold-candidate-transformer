@@ -87,7 +87,10 @@ def extract_phones(text):
 
 
 def extract_emails(text):
-    return list(set(re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text)))
+    # Clean up common spaces around @ and . from PDF extract layouts
+    cleaned = re.sub(r'\s*@\s*', '@', text)
+    cleaned = re.sub(r'\s*\.\s*(com|org|net|edu|gov|in|io|co|info|me)\b', r'.\1', cleaned, flags=re.IGNORECASE)
+    return list(set(re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', cleaned)))
 
 
 def extract_links(text):
@@ -142,8 +145,8 @@ def segment_sections(text):
     headers = [
         "PROFESSIONAL SUMMARY", "SUMMARY",
         "TECHNICAL SKILLS", "SKILLS",
-        "INTERNSHIP EXPERIENCE", "WORK EXPERIENCE", "EXPERIENCE",
-        "PROJECTS",
+        "INTERNSHIP EXPERIENCE", "WORK EXPERIENCE", "EXPERIENCE", "INTERNSHIPS",
+        "PROJECTS", "PROJECT",
         "EDUCATION",
         "CERTIFICATIONS",
         "ACHIEVEMENTS",
@@ -182,12 +185,12 @@ def parse_skills_section(lines):
         else:
             skill_part = line
         
-        items = [i.strip() for i in re.split(r'[,|&]|—', skill_part)]
+        # Replace parentheses with commas so nested skill sets split nicely (e.g. HTML,CSS)
+        skill_part_clean = skill_part.replace("(", ",").replace(")", ",")
+        items = [i.strip() for i in re.split(r'[,|&]|—', skill_part_clean)]
         for item in items:
             if item and len(item) < 40:
-                item_clean = re.sub(r'\(.*?\)', '', item).strip()
-                # Clean trailing/leading bullet chars
-                item_clean = re.sub(r'^[\*\-\•\s]+', '', item_clean).strip()
+                item_clean = re.sub(r'^[\*\-\•\s]+', '', item).strip()
                 if item_clean:
                     skills.append(item_clean)
     return list(set(skills))
@@ -198,39 +201,67 @@ def parse_experience_section(lines):
     current_exp = None
     
     date_regex = r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4}\s*(?:-|–|to)\s*(?:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4}|Present|Current)\b"
+    year_span_regex = r"\b(20\d{2}|19\d{2})\s*(?:-|–|to)\s*(?:(20\d{2}|19\d{2})|Present|Current)\b"
     
     for line in lines:
-        date_match = re.search(date_regex, line, re.IGNORECASE)
-        if "|" in line and date_match:
+        cleaned = line.strip()
+        if not cleaned:
+            continue
+            
+        date_match = re.search(date_regex, cleaned, re.IGNORECASE) or re.search(year_span_regex, cleaned, re.IGNORECASE)
+        
+        is_new_exp = False
+        title = None
+        company = None
+        start_date = None
+        end_date = None
+        
+        if "|" in cleaned:
+            parts = [p.strip() for p in cleaned.split("|")]
+            title = parts[0]
+            company = parts[1] if len(parts) > 1 else None
+            
+            if date_match:
+                date_str = date_match.group(0)
+                if company:
+                    company = company.replace(date_str, "").strip()
+                title = title.replace(date_str, "").strip()
+            is_new_exp = True
+        elif date_match:
+            date_str = date_match.group(0)
+            parts = cleaned.split(date_str)
+            title = parts[0].strip()
+            is_new_exp = True
+            
+        if is_new_exp:
             if current_exp:
                 experience.append(current_exp)
-            
-            parts = [p.strip() for p in line.split("|")]
-            title = parts[0]
-            rest = parts[1]
-            
-            date_str = date_match.group(0)
-            company = rest.replace(date_str, "").strip()
-            # clean tab characters or multiple spaces
-            company = re.sub(r'\s+', ' ', company).strip()
-            
-            dates = [d.strip() for d in re.split(r'-|–|to', date_str)]
-            start_date = dates[0]
-            end_date = dates[1] if len(dates) > 1 else "Present"
-            
+                
+            if date_match:
+                date_str = date_match.group(0)
+                dates = [d.strip() for d in re.split(r'-|–|to', date_str)]
+                start_date = dates[0]
+                end_date = dates[1] if len(dates) > 1 else "Present"
+                
+            if title:
+                title = re.sub(r'\s+', ' ', title).strip()
+            if company:
+                company = re.sub(r'\s+', ' ', company).strip()
+                
             current_exp = {
-                "company": company,
-                "title": title,
+                "company": company or "Unknown",
+                "title": title or "Unknown",
                 "start": start_date,
                 "end": end_date,
                 "summary": ""
             }
         else:
             if current_exp:
+                cleaned_bullet = re.sub(r'^[\*\-\•\s]+', '', cleaned).strip()
                 if current_exp["summary"]:
-                    current_exp["summary"] += "\n" + line
+                    current_exp["summary"] += "\n" + cleaned_bullet
                 else:
-                    current_exp["summary"] = line
+                    current_exp["summary"] = cleaned_bullet
                       
     if current_exp:
         experience.append(current_exp)
@@ -404,7 +435,12 @@ def parse_resume(path):
     ]
 
     # 7. Experience
-    exp_lines = sections.get("INTERNSHIP EXPERIENCE", []) or sections.get("WORK EXPERIENCE", []) or sections.get("EXPERIENCE", [])
+    exp_lines = (
+        sections.get("INTERNSHIP EXPERIENCE", []) or 
+        sections.get("WORK EXPERIENCE", []) or 
+        sections.get("EXPERIENCE", []) or
+        sections.get("INTERNSHIPS", [])
+    )
     experience = parse_experience_section(exp_lines)
     
     # 8. Years of experience
