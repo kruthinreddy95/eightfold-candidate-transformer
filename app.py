@@ -117,7 +117,7 @@ header[data-testid="stHeader"] {
 }
 
 /* ── SBI Rounded Left-Border Cards ─────────────────────────────────── */
-.card, .input-panel {
+.card, div[data-testid="stVerticalBlockBorderWrapper"] {
     background: #ffffff !important;
     border: 1px solid #d0e0ed !important;
     border-left: 5px solid #00b8df !important; /* Left teal border */
@@ -127,7 +127,7 @@ header[data-testid="stHeader"] {
     box-shadow: 0 2px 6px rgba(10,58,96,0.04) !important;
     transition: all 0.25s ease-in-out !important;
 }
-.card:hover, .input-panel:hover {
+.card:hover, div[data-testid="stVerticalBlockBorderWrapper"]:hover {
     border-color: #0a3a60 !important;
     box-shadow: 0 4px 14px rgba(10,58,96,0.08) !important;
 }
@@ -649,37 +649,34 @@ st.markdown(
 input_col, result_col = st.columns([1, 1.6], gap="large")
 
 with input_col:
-    st.markdown('<div class="input-panel">', unsafe_allow_html=True)
+    with st.container(border=True):
+        st.markdown('<p class="section-title">Structured Sources</p>', unsafe_allow_html=True)
+        _rc = st.session_state.input_reset_counter
+        ats_file = st.file_uploader("ATS JSON Export", type=["json"], label_visibility="visible",
+                                     key=f"ats_{_rc}")
+        csv_file = st.file_uploader("Recruiter CSV Export", type=["csv"], key=f"csv_{_rc}")
 
-    st.markdown('<p class="section-title">Structured Sources</p>', unsafe_allow_html=True)
-    _rc = st.session_state.input_reset_counter
-    ats_file = st.file_uploader("ATS JSON Export", type=["json"], label_visibility="visible",
-                                 key=f"ats_{_rc}")
-    csv_file = st.file_uploader("Recruiter CSV Export", type=["csv"], key=f"csv_{_rc}")
+        st.markdown('<p class="section-title">Unstructured Sources</p>', unsafe_allow_html=True)
+        resume_file = st.file_uploader("Resume  (PDF / DOCX / TXT)", type=["pdf", "docx", "txt"],
+                                        key=f"resume_{_rc}")
+        notes_file  = st.file_uploader("Recruiter Notes (.txt)", type=["txt"], key=f"notes_{_rc}")
 
-    st.markdown('<p class="section-title">Unstructured Sources</p>', unsafe_allow_html=True)
-    resume_file = st.file_uploader("Resume  (PDF / DOCX / TXT)", type=["pdf", "docx", "txt"],
-                                    key=f"resume_{_rc}")
-    notes_file  = st.file_uploader("Recruiter Notes (.txt)", type=["txt"], key=f"notes_{_rc}")
+        st.markdown('<p class="section-title">Online Profiles</p>', unsafe_allow_html=True)
+        github_url   = st.text_input("GitHub Profile URL",
+                                      value=st.session_state.github_url_val,
+                                      placeholder="https://github.com/username",
+                                      key=f"gh_{_rc}")
+        st.session_state.github_url_val = github_url
+        linkedin_url = st.text_input("LinkedIn Profile URL",
+                                      value=st.session_state.linkedin_url_val,
+                                      placeholder="https://linkedin.com/in/username",
+                                      key=f"li_{_rc}")
+        st.session_state.linkedin_url_val = linkedin_url
 
-    st.markdown('<p class="section-title">Online Profiles</p>', unsafe_allow_html=True)
-    github_url   = st.text_input("GitHub Profile URL",
-                                  value=st.session_state.github_url_val,
-                                  placeholder="https://github.com/username",
-                                  key=f"gh_{_rc}")
-    st.session_state.github_url_val = github_url
-    linkedin_url = st.text_input("LinkedIn Profile URL",
-                                  value=st.session_state.linkedin_url_val,
-                                  placeholder="https://linkedin.com/in/username",
-                                  key=f"li_{_rc}")
-    st.session_state.linkedin_url_val = linkedin_url
-
-    st.markdown('<p class="section-title">Output Configuration</p>', unsafe_allow_html=True)
-    _rc = st.session_state.input_reset_counter
-    config_file = st.file_uploader("Custom Projection Config (optional)", type=["json"],
-                                    key=f"cfg_{_rc}")
-
-    st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown('<p class="section-title">Output Configuration</p>', unsafe_allow_html=True)
+        _rc = st.session_state.input_reset_counter
+        config_file = st.file_uploader("Custom Projection Config (optional)", type=["json"],
+                                        key=f"cfg_{_rc}")
 
     st.markdown("")
 
