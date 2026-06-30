@@ -61,6 +61,33 @@ graph TD
     PRJ --> OUT
 ```
 
+### Text-Based Pipeline Flow
+
+```text
+   ATS JSON / Resume DOCX
+              │
+              ▼
+          [Parsers] (Extract fields from text/JSON)
+              │
+              ▼
+        [Normalizers] (Emails, phones E.164, countries, dates YYYY-MM)
+              │
+              ▼
+       [Merge Engine] (Resolve conflicts by confidence, union lists, boost skills)
+              │
+              ▼
+         [Validator] (Quality checks & generate validation_report.json)
+              │
+              ▼
+         [Projector] (JSONPath-like custom path mapping, omit/null/error strategy)
+              │
+              ▼
+    [Projected Validator] (Validate projected outputs against type & required fields)
+              │
+              ▼
+   Candidate Profile JSON
+```
+
 ### Stage-by-Stage Processing Details
 
 | Stage | Component | Core Responsibility | Input Format | Output Format |
@@ -76,6 +103,17 @@ graph TD
 * **Deterministic Behavior**: The system ensures identical input datasets will always yield the identical candidate profiles.
 * **State Isolation**: Independent candidate pipelines are fully decoupled. Resets prevent profile data bleeding or contamination.
 * **Robust Degradation**: A corrupted or missing data source will not crash the pipeline; the system records missing entries gracefully.
+
+---
+
+## Key Engineering Innovations & Edge Case Handling
+
+The project solves several complex real-world data processing challenges:
+
+* **Tenure Overlap Protection (Experience Deduplication)**: Calculating total years of experience by arithmetically summing positions leads to inflation when candidates hold overlapping jobs (e.g., concurrent internships, freelance roles, or academic projects). The pipeline tracks experience using a set of unique calendar months (`YYYY-MM`). The total years of experience is computed as the absolute calendar span of these unique months divided by 12, ensuring exact and non-inflated candidate tenure.
+* **Agreement-Based Skill Boosting**: Consolidates matching skills from different sources. The merged skill's confidence equals the maximum confidence among its sources plus a `+0.10` agreement bonus for each additional source that listed the same skill, up to a maximum of `1.0`. This rewards cross-verified skills.
+* **Granular Provenance Tracking**: Every field in the canonical candidate record tracks its origin (`{ field, source, method }`). This ensures high transparency and audibility, allowing recruiters to see exactly where and how each data point was extracted and normalized.
+* **Pipeline Isolation & State Safety**: Streamlit sessions and the underlying python transformer engine reset states completely using a custom reset trigger (`⟳ New Candidate`). This prevents profile contamination and data bleeding when processing consecutive candidate uploads.
 
 ---
 
@@ -154,11 +192,11 @@ Based on the mapping instructions:
 
 ## Technology Stack
 
-- **Python 3**
-- **python-docx** (DOCX structure extraction)
-- **pdfplumber** (PDF text extraction)
-- **phonenumbers** (E.164 format parsing)
-- **pydantic** (Canonical schema model validation)
+* **Frontend**: Streamlit (Interactive pipeline runner, metrics visualizer, DB viewer)
+* **Backend**: Python 3 (Core transformation engine)
+* **Database**: SQLite (Talent pool persistence store)
+* **Data Processing**: JSON, CSV, `pdfplumber` (PDF parsing), `python-docx` (DOCX parsing), `phonenumbers` (E.164 phone parsing), `pydantic` (Canonical schema model validation)
+* **DevOps**: Docker, GitHub Actions (CI/CD pipeline and automated tests runner)
 
 ---
 

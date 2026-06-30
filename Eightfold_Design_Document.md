@@ -17,28 +17,28 @@ The objective of this project is to build a robust, modular, and configurable ca
 The pipeline processes data through 7 distinct lifecycle stages:
 
 ```text
-ATS JSON / Resume DOCX
-         │
-         ▼
-     [Parsers] (Extract fields from text/JSON)
-         │
-         ▼
-  [Normalizers] (Emails, phones E.164, countries, dates YYYY-MM)
-         │
-         ▼
-   [Merge Engine] (Resolve conflicts by confidence, union lists, boost skills)
-         │
-         ▼
-    [Validator] (Quality checks & generate validation_report.json)
-         │
-         ▼
-   [Projector] (JSONPath-like custom path mapping, omit/null/error strategy)
-         │
-         ▼
-[Projected Validator] (Validate projected outputs against type & required fields)
-         │
-         ▼
-Candidate Profile JSON
+   ATS JSON / Resume DOCX
+              │
+              ▼
+          [Parsers] (Extract fields from text/JSON)
+              │
+              ▼
+        [Normalizers] (Emails, phones E.164, countries, dates YYYY-MM)
+              │
+              ▼
+       [Merge Engine] (Resolve conflicts by confidence, union lists, boost skills)
+              │
+              ▼
+         [Validator] (Quality checks & generate validation_report.json)
+              │
+              ▼
+         [Projector] (JSONPath-like custom path mapping, omit/null/error strategy)
+              │
+              ▼
+    [Projected Validator] (Validate projected outputs against type & required fields)
+              │
+              ▼
+   Candidate Profile JSON
 ```
 
 ---
