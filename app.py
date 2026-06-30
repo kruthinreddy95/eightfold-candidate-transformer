@@ -26,6 +26,12 @@ st.markdown("""
 Streamline candidate screening by ingesting data from multiple sources, normalizing details, and generating a clean, reconciled view for recruiters.
 """)
 
+# Initialize session state for URLs
+if "github_url" not in st.session_state:
+    st.session_state.github_url = ""
+if "linkedin_url" not in st.session_state:
+    st.session_state.linkedin_url = ""
+
 # Setup two-column layout
 col1, col2 = st.columns([1, 1.5])
 
@@ -44,8 +50,8 @@ with col1:
 
     # Social Profiles
     st.markdown("#### Social & Public URLs")
-    github_url = st.text_input("GitHub Profile URL", placeholder="https://github.com/username")
-    linkedin_url = st.text_input("LinkedIn Profile URL", placeholder="https://linkedin.com/in/username")
+    github_url = st.text_input("GitHub Profile URL", key="github_url", placeholder="https://github.com/username")
+    linkedin_url = st.text_input("LinkedIn Profile URL", key="linkedin_url", placeholder="https://linkedin.com/in/username")
 
     # Runtime Projection Config
     st.markdown("#### Output Configuration")
@@ -96,6 +102,25 @@ with col2:
                 parsed_profiles.append(resume_profile)
                 os.remove(tmp_path)
                 st.toast("Resume parsed")
+                
+                # Auto-paste links into session state if they aren't filled yet
+                if resume_profile and "links" in resume_profile and resume_profile["links"] and resume_profile["links"]["value"]:
+                    r_links = resume_profile["links"]["value"]
+                    has_new = False
+                    if r_links.get("github") and not st.session_state.github_url:
+                        github_val = r_links.get("github")
+                        if not github_val.startswith("http"):
+                            github_val = "https://" + github_val
+                        st.session_state.github_url = github_val
+                        has_new = True
+                    if r_links.get("linkedin") and not st.session_state.linkedin_url:
+                        linkedin_val = r_links.get("linkedin")
+                        if not linkedin_val.startswith("http"):
+                            linkedin_val = "https://" + linkedin_val
+                        st.session_state.linkedin_url = linkedin_val
+                        has_new = True
+                    if has_new:
+                        st.rerun()
             except Exception as e:
                 st.error(f"Failed to parse Resume: {e}")
 
