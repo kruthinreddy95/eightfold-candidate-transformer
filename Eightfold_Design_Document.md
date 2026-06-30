@@ -1,6 +1,6 @@
 # Multi-Source Candidate Data Transformer - Design Document
 
-**Author:** Kruthin Reddy  
+**Author:** Pillikandla Kruthin Reddy  
 **Assignment:** Eightfold Engineering Intern Assignment (Jul–Dec 2026)
 
 ---
