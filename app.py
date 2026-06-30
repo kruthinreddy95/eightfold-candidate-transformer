@@ -17,45 +17,45 @@ from src.projector import project
 
 # Set page style
 st.set_page_config(
-    page_title="Eightfold Candidate Data Transformer",
-    page_icon="🚀",
+    page_title="Eightfold Recruiter Dashboard",
+    page_icon="👤",
     layout="wide"
 )
 
-st.title("🚀 Multi-Source Candidate Data Transformer")
+st.title("👤 Eightfold Candidate Ingestion Dashboard")
 st.markdown("""
-This interactive UI ingests candidate information from multiple heterogeneous sources, normalizes, resolves conflicts by confidence scores, and projects the final output based on runtime configuration.
+Streamline candidate screening by ingesting data from multiple sources, normalizing details, and generating a clean, reconciled view for recruiters.
 """)
 
 # Setup two-column layout
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([1, 1.5])
 
 with col1:
     st.subheader("📥 Input Sources")
 
     # Structured Sources
-    st.markdown("### Structured Sources")
+    st.markdown("#### Structured Sources")
     ats_file = st.file_uploader("Upload ATS JSON file", type=["json"])
     csv_file = st.file_uploader("Upload Recruiter CSV Export", type=["csv"])
 
     # Unstructured Sources
-    st.markdown("### Unstructured Sources")
+    st.markdown("#### Unstructured Sources")
     resume_file = st.file_uploader("Upload Resume (DOCX, PDF, TXT)", type=["docx", "pdf", "txt"])
     notes_file = st.file_uploader("Upload Recruiter Notes (.txt)", type=["txt"])
 
     # Social Profiles
-    st.markdown("### Social & Public URLs")
+    st.markdown("#### Social & Public URLs")
     github_url = st.text_input("GitHub Profile URL", placeholder="https://github.com/username")
     linkedin_url = st.text_input("LinkedIn Profile URL", placeholder="https://linkedin.com/in/username")
 
     # Runtime Projection Config
-    st.markdown("### Output Configuration")
+    st.markdown("#### Output Configuration")
     config_file = st.file_uploader("Upload custom projection config JSON (optional)", type=["json"])
 
 with col2:
-    st.subheader("📊 Output Results")
+    st.subheader("📋 Recruiter Profile View")
     
-    generate_btn = st.button("⚡ Generate Canonical Profile", type="primary", use_container_width=True)
+    generate_btn = st.button("⚡ Process & Merge Candidate Data", type="primary", use_container_width=True)
     
     if generate_btn:
         parsed_profiles = []
@@ -73,7 +73,7 @@ with col2:
                 ats_data = json.loads(ats_file.getvalue().decode("utf-8"))
                 ats_profile = normalize_profile(parse_ats(ats_data))
                 parsed_profiles.append(ats_profile)
-                st.success("✅ ATS JSON parsed successfully")
+                st.toast("ATS JSON parsed", icon="✅")
             except Exception as e:
                 st.error(f"❌ Failed to parse ATS JSON: {e}")
 
@@ -84,7 +84,7 @@ with col2:
                 csv_profile = normalize_profile(parse_csv(tmp_path))
                 parsed_profiles.append(csv_profile)
                 os.remove(tmp_path)
-                st.success("✅ Recruiter CSV parsed successfully")
+                st.toast("Recruiter CSV parsed", icon="✅")
             except Exception as e:
                 st.error(f"❌ Failed to parse CSV: {e}")
 
@@ -95,7 +95,7 @@ with col2:
                 resume_profile = normalize_profile(parse_resume(tmp_path))
                 parsed_profiles.append(resume_profile)
                 os.remove(tmp_path)
-                st.success("✅ Resume parsed successfully")
+                st.toast("Resume parsed", icon="✅")
             except Exception as e:
                 st.error(f"❌ Failed to parse Resume: {e}")
 
@@ -106,7 +106,7 @@ with col2:
                 notes_profile = normalize_profile(parse_notes(tmp_path))
                 parsed_profiles.append(notes_profile)
                 os.remove(tmp_path)
-                st.success("✅ Recruiter Notes parsed successfully")
+                st.toast("Recruiter Notes parsed", icon="✅")
             except Exception as e:
                 st.error(f"❌ Failed to parse Recruiter Notes: {e}")
 
@@ -115,7 +115,7 @@ with col2:
             try:
                 github_profile = normalize_profile(parse_github(github_url))
                 parsed_profiles.append(github_profile)
-                st.success("✅ GitHub Profile parsed successfully")
+                st.toast("GitHub Profile parsed", icon="✅")
             except Exception as e:
                 st.error(f"❌ Failed to parse GitHub URL: {e}")
 
@@ -124,13 +124,13 @@ with col2:
             try:
                 linkedin_profile = normalize_profile(parse_linkedin(linkedin_url))
                 parsed_profiles.append(linkedin_profile)
-                st.success("✅ LinkedIn Profile parsed successfully")
+                st.toast("LinkedIn Profile parsed", icon="✅")
             except Exception as e:
                 st.error(f"❌ Failed to parse LinkedIn URL: {e}")
 
         # Execute Pipeline Reconciliation
         if parsed_profiles:
-            with st.spinner("Reconciling and merging profiles..."):
+            with st.spinner("Executing pipeline ingestion, normalizations, and reconciliations..."):
                 final_profile = merge(parsed_profiles)
                 errors = validate(final_profile)
                 
@@ -157,10 +157,109 @@ with col2:
                     projected_profile = None
 
             if projected_profile:
-                # Tabs to visualize reports
-                tab1, tab2, tab3 = st.tabs(["✨ Projected Profile", "📁 Canonical Intermediate", "📋 Validation Report"])
+                # View tabs: Visual Dashboard first, then raw JSON formats
+                tab1, tab2, tab3, tab4 = st.tabs([
+                    "👤 Recruiter Dashboard", 
+                    "📄 Projected Output JSON", 
+                    "📁 Canonical Intermediate JSON", 
+                    "🛡 Validation & Audit"
+                ])
                 
                 with tab1:
+                    # Header metrics
+                    st.success(f"### candidate_id: {final_profile.get('candidate_id')}")
+                    
+                    mc1, mc2, mc3 = st.columns(3)
+                    with mc1:
+                        st.metric(
+                            label="Candidate Name", 
+                            value=final_profile.get("full_name") or "Unknown"
+                        )
+                    with mc2:
+                        st.metric(
+                            label="Location", 
+                            value=f"{final_profile['location']['city']}, {final_profile['location']['country']}" if (final_profile.get("location") and final_profile["location"].get("city")) else "Not Provided"
+                        )
+                    with mc3:
+                        st.metric(
+                            label="Experience", 
+                            value=f"{final_profile.get('years_experience', 0.0)} Years"
+                        )
+
+                    st.markdown("---")
+
+                    # Overview & Contact Details
+                    oc1, oc2 = st.columns(2)
+                    with oc1:
+                        st.markdown("#### 📞 Contact Details")
+                        emails = final_profile.get("emails", [])
+                        primary_email = emails[0] if emails else "None"
+                        phones = final_profile.get("phones", [])
+                        primary_phone = phones[0] if phones else "None"
+                        st.markdown(f"**Primary Email**: `{primary_email}`")
+                        st.markdown(f"**Primary Phone**: `{primary_phone}`")
+                        
+                        st.markdown("#### 🔗 Links")
+                        links = final_profile.get("links")
+                        if links:
+                            st.markdown(f"- **LinkedIn**: {links.get('linkedin') or 'None'}")
+                            st.markdown(f"- **GitHub**: {links.get('github') or 'None'}")
+                            st.markdown(f"- **Portfolio**: {links.get('portfolio') or 'None'}")
+                        else:
+                            st.markdown("No URLs detected.")
+                    
+                    with oc2:
+                        st.markdown("#### 🛡 Confidence Metrics")
+                        conf = final_profile.get("overall_confidence", 0.0)
+                        st.markdown(f"**Overall Ingestion Confidence**: `{int(conf*100)}%`")
+                        st.progress(conf)
+                        st.markdown(f"**Unique Ingestion Sources**: `{len(parsed_profiles)}`")
+                        st.markdown(f"**Skills Detected**: `{len(final_profile.get('skills', []))}`")
+
+                    st.markdown("---")
+
+                    # Skills section rendered cleanly
+                    st.markdown("#### 🛠 Technical Skills")
+                    skills = final_profile.get("skills", [])
+                    if skills:
+                        # Render skills as list of text tags with confidence scores
+                        cols = st.columns(5)
+                        for idx, s in enumerate(skills):
+                            with cols[idx % 5]:
+                                st.info(f"**{s['name']}**\n\nScore: {int(s['confidence']*100)}%")
+                    else:
+                        st.markdown("No skills detected.")
+
+                    st.markdown("---")
+
+                    # Experience and Education columns
+                    ec1, ec2 = st.columns(2)
+                    
+                    with ec1:
+                        st.markdown("#### 💼 Experience History")
+                        exp = final_profile.get("experience", [])
+                        if exp:
+                            for e in exp:
+                                st.markdown(f"##### **{e.get('title')}**")
+                                st.markdown(f"*{e.get('company')}*  |  `{e.get('start') or ''}` - `{e.get('end') or 'Present'}`")
+                                if e.get("summary"):
+                                    st.markdown(e.get("summary").replace("\n", "\n\n"))
+                                st.markdown("---")
+                        else:
+                            st.markdown("No experience history detected.")
+                            
+                    with ec2:
+                        st.markdown("#### 🎓 Education Details")
+                        edu = final_profile.get("education", [])
+                        if edu:
+                            for ed in edu:
+                                st.markdown(f"##### **{ed.get('degree')} in {ed.get('field')}**")
+                                st.markdown(f"*{ed.get('institution')}*  |  End Year: `{ed.get('end_year') or 'N/A'}`")
+                                st.markdown("---")
+                        else:
+                            st.markdown("No education details detected.")
+
+                with tab2:
                     st.json(projected_profile)
                     st.download_button(
                         label="Download Projected Profile",
@@ -169,7 +268,7 @@ with col2:
                         mime="application/json"
                     )
                 
-                with tab2:
+                with tab3:
                     st.json(final_profile)
                     st.download_button(
                         label="Download Canonical Intermediate",
@@ -178,7 +277,8 @@ with col2:
                         mime="application/json"
                     )
                     
-                with tab3:
+                with tab4:
+                    st.markdown("### Quality Audit Checks")
                     validation_report_path = "output/validation_report.json"
                     if os.path.exists(validation_report_path):
                         with open(validation_report_path, "r") as f:
@@ -186,5 +286,10 @@ with col2:
                         st.json(report)
                     else:
                         st.warning("Validation report not generated.")
+                        
+                    st.markdown("### Ingestion Provenance Logs")
+                    provenance_log = final_profile.get("provenance", [])
+                    if provenance_log:
+                        st.table(provenance_log)
         else:
             st.warning("⚠️ Please provide at least one input source before generating.")
