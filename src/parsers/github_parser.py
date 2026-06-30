@@ -87,19 +87,11 @@ def parse_github(url):
             ]
             
     except Exception:
-        fallback_name = username.replace("-", " ").replace("_", " ").title()
-        result["full_name"] = tagged(fallback_name)
-        result["headline"] = tagged(f"GitHub Developer Profile for {username}")
         result["links"] = tagged({
             "linkedin": None,
             "github": f"https://github.com/{username}",
             "portfolio": None,
             "other": []
         })
-        result["skills"] = [
-            {"name": "Python", "confidence": BASE_CONFIDENCE, "source": SOURCE},
-            {"name": "Git", "confidence": BASE_CONFIDENCE, "source": SOURCE},
-            {"name": "GitHub", "confidence": BASE_CONFIDENCE, "source": SOURCE}
-        ]
 
     return result
