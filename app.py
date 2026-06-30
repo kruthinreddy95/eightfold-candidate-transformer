@@ -17,12 +17,11 @@ from src.projector import project
 
 # Set page style
 st.set_page_config(
-    page_title="Eightfold Recruiter Dashboard",
-    page_icon="👤",
+    page_title="Candidate Ingestion Dashboard",
     layout="wide"
 )
 
-st.title("👤 Eightfold Candidate Ingestion Dashboard")
+st.title("Candidate Ingestion Dashboard")
 st.markdown("""
 Streamline candidate screening by ingesting data from multiple sources, normalizing details, and generating a clean, reconciled view for recruiters.
 """)
@@ -31,7 +30,7 @@ Streamline candidate screening by ingesting data from multiple sources, normaliz
 col1, col2 = st.columns([1, 1.5])
 
 with col1:
-    st.subheader("📥 Input Sources")
+    st.subheader("Input Sources")
 
     # Structured Sources
     st.markdown("#### Structured Sources")
@@ -53,9 +52,9 @@ with col1:
     config_file = st.file_uploader("Upload custom projection config JSON (optional)", type=["json"])
 
 with col2:
-    st.subheader("📋 Recruiter Profile View")
+    st.subheader("Recruiter Profile View")
     
-    generate_btn = st.button("⚡ Process & Merge Candidate Data", type="primary", use_container_width=True)
+    generate_btn = st.button("Process & Merge Candidate Data", type="primary", use_container_width=True)
     
     if generate_btn:
         parsed_profiles = []
@@ -73,9 +72,9 @@ with col2:
                 ats_data = json.loads(ats_file.getvalue().decode("utf-8"))
                 ats_profile = normalize_profile(parse_ats(ats_data))
                 parsed_profiles.append(ats_profile)
-                st.toast("ATS JSON parsed", icon="✅")
+                st.toast("ATS JSON parsed")
             except Exception as e:
-                st.error(f"❌ Failed to parse ATS JSON: {e}")
+                st.error(f"Failed to parse ATS JSON: {e}")
 
         # Process Structured CSV
         if csv_file:
@@ -84,9 +83,9 @@ with col2:
                 csv_profile = normalize_profile(parse_csv(tmp_path))
                 parsed_profiles.append(csv_profile)
                 os.remove(tmp_path)
-                st.toast("Recruiter CSV parsed", icon="✅")
+                st.toast("Recruiter CSV parsed")
             except Exception as e:
-                st.error(f"❌ Failed to parse CSV: {e}")
+                st.error(f"Failed to parse CSV: {e}")
 
         # Process Unstructured Resume
         if resume_file:
@@ -95,9 +94,9 @@ with col2:
                 resume_profile = normalize_profile(parse_resume(tmp_path))
                 parsed_profiles.append(resume_profile)
                 os.remove(tmp_path)
-                st.toast("Resume parsed", icon="✅")
+                st.toast("Resume parsed")
             except Exception as e:
-                st.error(f"❌ Failed to parse Resume: {e}")
+                st.error(f"Failed to parse Resume: {e}")
 
         # Process Unstructured Recruiter Notes
         if notes_file:
@@ -106,31 +105,31 @@ with col2:
                 notes_profile = normalize_profile(parse_notes(tmp_path))
                 parsed_profiles.append(notes_profile)
                 os.remove(tmp_path)
-                st.toast("Recruiter Notes parsed", icon="✅")
+                st.toast("Recruiter Notes parsed")
             except Exception as e:
-                st.error(f"❌ Failed to parse Recruiter Notes: {e}")
+                st.error(f"Failed to parse Recruiter Notes: {e}")
 
         # Process GitHub URL
         if github_url:
             try:
                 github_profile = normalize_profile(parse_github(github_url))
                 parsed_profiles.append(github_profile)
-                st.toast("GitHub Profile parsed", icon="✅")
+                st.toast("GitHub Profile parsed")
             except Exception as e:
-                st.error(f"❌ Failed to parse GitHub URL: {e}")
+                st.error(f"Failed to parse GitHub URL: {e}")
 
         # Process LinkedIn URL
         if linkedin_url:
             try:
                 linkedin_profile = normalize_profile(parse_linkedin(linkedin_url))
                 parsed_profiles.append(linkedin_profile)
-                st.toast("LinkedIn Profile parsed", icon="✅")
+                st.toast("LinkedIn Profile parsed")
             except Exception as e:
-                st.error(f"❌ Failed to parse LinkedIn URL: {e}")
+                st.error(f"Failed to parse LinkedIn URL: {e}")
 
         # Execute Pipeline Reconciliation
         if parsed_profiles:
-            with st.spinner("Executing pipeline ingestion, normalizations, and reconciliations..."):
+            with st.spinner("Executing pipeline Ingestion..."):
                 final_profile = merge(parsed_profiles)
                 errors = validate(final_profile)
                 
@@ -140,7 +139,7 @@ with col2:
                     try:
                         config = json.loads(config_file.getvalue().decode("utf-8"))
                     except Exception as e:
-                        st.error(f"❌ Invalid custom config JSON: {e}")
+                        st.error(f"Invalid custom config JSON: {e}")
                 
                 if not config:
                     default_config_path = "configs/default.json"
@@ -153,21 +152,20 @@ with col2:
                 try:
                     projected_profile = project(final_profile, config)
                 except Exception as e:
-                    st.error(f"❌ Error during projection mapping: {e}")
+                    st.error(f"Error during projection mapping: {e}")
                     projected_profile = None
 
             if projected_profile:
-                # View tabs: Visual Dashboard first, then raw JSON formats
+                # View tabs
                 tab1, tab2, tab3, tab4 = st.tabs([
-                    "👤 Recruiter Dashboard", 
-                    "📄 Projected Output JSON", 
-                    "📁 Canonical Intermediate JSON", 
-                    "🛡 Validation & Audit"
+                    "Recruiter Dashboard", 
+                    "Projected Output JSON", 
+                    "Canonical Intermediate JSON", 
+                    "Validation & Audit"
                 ])
                 
                 with tab1:
-                    # Header metrics
-                    st.success(f"### candidate_id: {final_profile.get('candidate_id')}")
+                    st.markdown(f"### Candidate ID: {final_profile.get('candidate_id')}")
                     
                     mc1, mc2, mc3 = st.columns(3)
                     with mc1:
@@ -191,7 +189,7 @@ with col2:
                     # Overview & Contact Details
                     oc1, oc2 = st.columns(2)
                     with oc1:
-                        st.markdown("#### 📞 Contact Details")
+                        st.markdown("#### Contact Details")
                         emails = final_profile.get("emails", [])
                         primary_email = emails[0] if emails else "None"
                         phones = final_profile.get("phones", [])
@@ -199,7 +197,7 @@ with col2:
                         st.markdown(f"**Primary Email**: `{primary_email}`")
                         st.markdown(f"**Primary Phone**: `{primary_phone}`")
                         
-                        st.markdown("#### 🔗 Links")
+                        st.markdown("#### Links")
                         links = final_profile.get("links")
                         if links:
                             st.markdown(f"- **LinkedIn**: {links.get('linkedin') or 'None'}")
@@ -209,7 +207,7 @@ with col2:
                             st.markdown("No URLs detected.")
                     
                     with oc2:
-                        st.markdown("#### 🛡 Confidence Metrics")
+                        st.markdown("#### Confidence Metrics")
                         conf = final_profile.get("overall_confidence", 0.0)
                         st.markdown(f"**Overall Ingestion Confidence**: `{int(conf*100)}%`")
                         st.progress(conf)
@@ -219,10 +217,10 @@ with col2:
                     st.markdown("---")
 
                     # Skills section rendered cleanly
-                    st.markdown("#### 🛠 Technical Skills")
+                    st.markdown("#### Technical Skills")
                     skills = final_profile.get("skills", [])
                     if skills:
-                        # Render skills as list of text tags with confidence scores
+                        # Render skills in a nice grid
                         cols = st.columns(5)
                         for idx, s in enumerate(skills):
                             with cols[idx % 5]:
@@ -236,7 +234,7 @@ with col2:
                     ec1, ec2 = st.columns(2)
                     
                     with ec1:
-                        st.markdown("#### 💼 Experience History")
+                        st.markdown("#### Experience History")
                         exp = final_profile.get("experience", [])
                         if exp:
                             for e in exp:
@@ -249,7 +247,7 @@ with col2:
                             st.markdown("No experience history detected.")
                             
                     with ec2:
-                        st.markdown("#### 🎓 Education Details")
+                        st.markdown("#### Education Details")
                         edu = final_profile.get("education", [])
                         if edu:
                             for ed in edu:
@@ -292,4 +290,4 @@ with col2:
                     if provenance_log:
                         st.table(provenance_log)
         else:
-            st.warning("⚠️ Please provide at least one input source before generating.")
+            st.warning("Please provide at least one input source before generating.")
