@@ -72,6 +72,7 @@ def main():
         logging.warning(f"ATS file {args.ats} not found")
 
     # 2. Load and parse Resume
+    resume_profile = None
     if os.path.exists(args.resume):
         print(f"Loading Resume from: {args.resume}...")
         try:
@@ -112,11 +113,28 @@ def main():
         else:
             print(f"⚠️ Warning: Notes file {args.notes} not found. Skipping.")
 
+    # Auto-follow links extracted from Resume if not explicitly provided
+    github_to_parse = args.github
+    linkedin_to_parse = args.linkedin
+
+    if resume_profile and "links" in resume_profile and resume_profile["links"] and resume_profile["links"]["value"]:
+        r_links = resume_profile["links"]["value"]
+        if not github_to_parse and r_links.get("github"):
+            github_to_parse = r_links.get("github")
+            if not github_to_parse.startswith("http"):
+                github_to_parse = "https://" + github_to_parse
+            print(f"Auto-discovered GitHub link from resume: {github_to_parse}")
+        if not linkedin_to_parse and r_links.get("linkedin"):
+            linkedin_to_parse = r_links.get("linkedin")
+            if not linkedin_to_parse.startswith("http"):
+                linkedin_to_parse = "https://" + linkedin_to_parse
+            print(f"Auto-discovered LinkedIn link from resume: {linkedin_to_parse}")
+
     # 5. Load and parse GitHub URL
-    if args.github:
-        print(f"Fetching GitHub Profile URL: {args.github}...")
+    if github_to_parse:
+        print(f"Fetching GitHub Profile URL: {github_to_parse}...")
         try:
-            github_profile = normalize_profile(parse_github(args.github))
+            github_profile = normalize_profile(parse_github(github_to_parse))
             parsed_profiles.append(github_profile)
             logging.info("GitHub URL Parsed and Normalized Successfully")
         except Exception as e:
@@ -124,10 +142,10 @@ def main():
             logging.warning(f"GitHub URL Parse failed: {e}")
 
     # 6. Load and parse LinkedIn URL
-    if args.linkedin:
-        print(f"Resolving LinkedIn Profile URL: {args.linkedin}...")
+    if linkedin_to_parse:
+        print(f"Resolving LinkedIn Profile URL: {linkedin_to_parse}...")
         try:
-            linkedin_profile = normalize_profile(parse_linkedin(args.linkedin))
+            linkedin_profile = normalize_profile(parse_linkedin(linkedin_to_parse))
             parsed_profiles.append(linkedin_profile)
             logging.info("LinkedIn URL Parsed and Normalized Successfully")
         except Exception as e:

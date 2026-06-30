@@ -88,6 +88,7 @@ with col2:
                 st.error(f"Failed to parse CSV: {e}")
 
         # Process Unstructured Resume
+        resume_profile = None
         if resume_file:
             try:
                 tmp_path = save_temp_file(resume_file)
@@ -109,19 +110,36 @@ with col2:
             except Exception as e:
                 st.error(f"Failed to parse Recruiter Notes: {e}")
 
+        # Auto-follow links extracted from Resume
+        github_to_parse = github_url
+        linkedin_to_parse = linkedin_url
+
+        if resume_profile and "links" in resume_profile and resume_profile["links"] and resume_profile["links"]["value"]:
+            r_links = resume_profile["links"]["value"]
+            if not github_to_parse and r_links.get("github"):
+                github_to_parse = r_links.get("github")
+                if not github_to_parse.startswith("http"):
+                    github_to_parse = "https://" + github_to_parse
+                st.info(f"Auto-discovered GitHub URL from resume: {github_to_parse}")
+            if not linkedin_to_parse and r_links.get("linkedin"):
+                linkedin_to_parse = r_links.get("linkedin")
+                if not linkedin_to_parse.startswith("http"):
+                    linkedin_to_parse = "https://" + linkedin_to_parse
+                st.info(f"Auto-discovered LinkedIn URL from resume: {linkedin_to_parse}")
+
         # Process GitHub URL
-        if github_url:
+        if github_to_parse:
             try:
-                github_profile = normalize_profile(parse_github(github_url))
+                github_profile = normalize_profile(parse_github(github_to_parse))
                 parsed_profiles.append(github_profile)
                 st.toast("GitHub Profile parsed")
             except Exception as e:
                 st.error(f"Failed to parse GitHub URL: {e}")
 
         # Process LinkedIn URL
-        if linkedin_url:
+        if linkedin_to_parse:
             try:
-                linkedin_profile = normalize_profile(parse_linkedin(linkedin_url))
+                linkedin_profile = normalize_profile(parse_linkedin(linkedin_to_parse))
                 parsed_profiles.append(linkedin_profile)
                 st.toast("LinkedIn Profile parsed")
             except Exception as e:
