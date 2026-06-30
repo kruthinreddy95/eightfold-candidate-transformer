@@ -1,0 +1,9 @@
+Candidate: Pillikandla Kruthin Reddy
+Current Role: Software Developer Intern
+Location: Chennai, India
+Contact Info:
+Phone: +91 9502235163
+Email: kruthinreddy95@gmail.com
+Skills: Python, Java, MySQL, Git, GitHub
+Experience: 3 years of experience.
+Worked at SmartED Innovations on full-stack development tasks.

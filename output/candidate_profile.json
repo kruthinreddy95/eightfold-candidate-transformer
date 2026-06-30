@@ -5,6 +5,22 @@
     "kruthin@gmail.com",
     "kruthinreddy95@gmail.com"
   ],
+  "phones": [
+    "+919876543210",
+    "+919502235163"
+  ],
+  "location": {
+    "city": "Chennai",
+    "country": "IN"
+  },
+  "links": {
+    "linkedin": "linkedin.com/in/pillikandla-kruthin-reddy-b97245289",
+    "github": "github.com/kruthinreddy95",
+    "portfolio": null,
+    "other": []
+  },
+  "headline": "Fresher \u2013 Software Developer  |  Python  |  Java  |  MySQL  |  HTML & CSS  |  Cloud Computing",
+  "years_experience": 0.17,
   "skills": [
     {
       "name": "Python",
@@ -12,8 +28,7 @@
       "sources": [
         "ats_json",
         "resume_docx"
-      ],
-      "agreement_count": 2
+      ]
     },
     {
       "name": "Git",
@@ -21,64 +36,321 @@
       "sources": [
         "ats_json",
         "resume_docx"
-      ],
-      "agreement_count": 2
+      ]
     },
     {
       "name": "SQL",
       "confidence": 0.85,
       "sources": [
         "ats_json"
-      ],
-      "agreement_count": 1
+      ]
     },
     {
-      "name": "Java",
+      "name": "Polymorphism",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
-      ],
-      "agreement_count": 1
+      ]
+    },
+    {
+      "name": "Page Structure",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Styling and Layouts",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Analytical Thinking",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Microsoft Copilot",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Responsive Web Design",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Problem Solving",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "RDBMS Concepts",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
     },
     {
       "name": "MySQL",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
-      ],
-      "agreement_count": 1
+      ]
+    },
+    {
+      "name": "Java",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Team Collaboration",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Virtual Machines",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Hypervisors",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Virtualization",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
     },
     {
       "name": "GitHub",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
-      ],
-      "agreement_count": 1
+      ]
     },
     {
-      "name": "HTML",
+      "name": "Basic Stored Procedures",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
-      ],
-      "agreement_count": 1
+      ]
+    },
+    {
+      "name": "Cloud Infrastructure",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Encapsulation",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "VS Code",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Cloud Computing Fundamentals",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "OOP",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
     },
     {
       "name": "CSS",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
-      ],
-      "agreement_count": 1
+      ]
+    },
+    {
+      "name": "OOP in Python and Java",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Quick Learning",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Queries",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Inheritance",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Relational Database Design",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "HTML",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Communication",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Joins",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
     }
   ],
-  "overall_confidence": 0.81,
+  "experience": [
+    {
+      "company": "SmartED Innovations",
+      "title": "Full Stack Web Development Intern",
+      "start": "2025-05",
+      "end": "2025-06",
+      "summary": "Developed web application features using HTML, CSS, and Python, handling both front-end design and backend logic.\nDesigned and managed MySQL database tables to store and retrieve user and application data.\nApplied Object-Oriented Programming principles in Python for clean and reusable code.\nWorked collaboratively with the development team using Git for version control.\nAwarded Letter of Recommendation (LOR) for outstanding performance."
+    },
+    {
+      "company": "YBI Foundation",
+      "title": "Python Programming Intern",
+      "start": "2025-05",
+      "end": "2025-06",
+      "summary": "Developed Python programs applying OOP concepts \u2014 classes, objects, inheritance, and exception handling.\nBuilt automation scripts and data processing programs using Python's standard libraries.\nPractised writing clean, well-documented Python code following good programming standards."
+    },
+    {
+      "company": "SmartED Innovations",
+      "title": "Business Executive Intern",
+      "start": "2025-05",
+      "end": "2025-06",
+      "summary": "Handled client and partner queries effectively with clear written and verbal communication.\nContributed to operational improvements and cross-team coordination within the company."
+    },
+    {
+      "company": "IIT Madras",
+      "title": "Saarang Ambassador",
+      "start": "2025-05",
+      "end": "2025-06",
+      "summary": "Represented HITS at IIT Madras' national cultural festival \u2014 managed outreach and student registrations."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Hindustan Institute of Technology and Science (HITS), Chennai",
+      "degree": "B.Tech",
+      "field": "Computer Science Engineering",
+      "end_year": 2027
+    },
+    {
+      "institution": "Accord School",
+      "degree": "Intermediate Class XII",
+      "field": "CBSE",
+      "end_year": 2023
+    },
+    {
+      "institution": "Bhuvanagiri Public School",
+      "degree": "Secondary School Class X",
+      "field": "ICSE",
+      "end_year": 2021
+    }
+  ],
+  "overall_confidence": 0.78,
   "provenance": [
     {
       "field": "full_name",
       "source": "ats_json",
       "method": "highest_confidence"
+    },
+    {
+      "field": "headline",
+      "source": "resume_docx",
+      "method": "highest_confidence"
+    },
+    {
+      "field": "years_experience",
+      "source": "resume_docx",
+      "method": "highest_confidence"
+    },
+    {
+      "field": "location",
+      "source": "resume_docx",
+      "method": "highest_confidence"
+    },
+    {
+      "field": "links.linkedin",
+      "source": "resume_docx",
+      "method": "highest_confidence"
+    },
+    {
+      "field": "links.github",
+      "source": "resume_docx",
+      "method": "highest_confidence"
+    },
+    {
+      "field": "emails",
+      "source": "ats_json, resume_docx",
+      "method": "union"
+    },
+    {
+      "field": "phones",
+      "source": "ats_json, resume_docx",
+      "method": "union"
     }
-  ]
+  ],
+  "metrics": {
+    "skills_detected": 33,
+    "emails_detected": 2
+  }
 }
