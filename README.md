@@ -12,6 +12,106 @@ The engine features robust confidence-based conflict resolution, agreement-based
 
 ---
 
+## Architecture Flow
+
+```text
+  [Structured Inputs]                      [Unstructured Inputs]
+ ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+ │ Recruiter CSV    │ │ ATS JSON         │ │ GitHub URL       │ │ LinkedIn URL     │
+ └────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘
+          │                    │                    │                    │
+          └────────────────────┼─────────┬──────────┘                    │
+                               │         │                               │
+                               │         │  ┌──────────────────┐ ┌───────┴──────────┐
+                               │         │  │ Resume (.docx)   │ │ Recruiter Notes  │
+                               │         │  └────────┬─────────┘ └───────┬──────────┘
+                               │         │           │                   │
+                               ▼         ▼           ▼                   ▼
+                            ┌──────────────────────────────────────────────┐
+                            │                   Parsers                    │
+                            └──────────────────────┬───────────────────────┘
+                                                   │
+                                                   ▼
+                            ┌──────────────────────────────────────────────┐
+                            │                 Normalizer                   │
+                            └──────────────────────┬───────────────────────┘
+                                                   │
+                                                   ▼
+                            ┌──────────────────────────────────────────────┐
+                            │                Merge Engine                  │
+                            └──────────────────────┬───────────────────────┘
+                                                   │
+                                                   ▼
+                            ┌──────────────────────────────────────────────┐
+                            │                  Validator                   │
+                            └──────────────────────┬───────────────────────┘
+                                                   │
+                                                   ▼
+                            ┌──────────────────────────────────────────────┐
+                            │                  Projector                   │
+                            └──────────────────────┬───────────────────────┘
+                                                   │
+                                                   ▼
+                                        Candidate Profile JSON
+```
+
+---
+
+## Example Ingestion Mapping
+
+Here is an example of how raw inputs are parsed, merged, and projected:
+
+### Inputs
+
+**1. ATS JSON**
+```json
+{
+  "candidate_name": "Kruthin Reddy",
+  "mail": "KRUTHIN@GMAIL.COM",
+  "mobile": "9876543210",
+  "skills": ["py", "sql", "git"]
+}
+```
+
+**2. Resume (Unstructured Text)**
+```text
+PILLIKANDLA KRUTHIN REDDY
+kruthinreddy95@gmail.com | +91 9502235163
+Skills: Python, Java, MySQL, Git
+```
+
+---
+
+### Merged Canonical Record
+
+The merge engine standardizes and unifies fields:
+- **Emails**: Combined uniquely `["kruthin@gmail.com", "kruthinreddy95@gmail.com"]`.
+- **Skills**: "py" & "Python", "git" & "Git" are normalized and matched. Their confidence is boosted to `1.0` because they were verified by both independent sources.
+- **Phones**: Formatted to E.164.
+
+---
+
+### Projected Output (Via Runtime Configuration)
+
+Based on the mapping instructions:
+```json
+{
+  "full_name": "Kruthin Reddy",
+  "primary_email": "kruthin@gmail.com",
+  "phone": "+919876543210",
+  "skills": [
+    "Python",
+    "Git",
+    "SQL",
+    "MySQL",
+    "Java"
+  ],
+  "overall_confidence": 0.79
+}
+```
+
+---
+
 ## Assignment Requirements Coverage
 
 | Requirement | Status | Implemented Details |
@@ -46,13 +146,16 @@ The engine features robust confidence-based conflict resolution, agreement-based
 eightfold-assignment/
 ├── Eightfold_Design_Document.md    # Detailed system design
 ├── README.md                       # Execution guide & requirements coverage
+├── requirements.txt                # Package dependencies
 ├── configs/
 │   ├── default.json                # Default projection configuration
 │   ├── custom.json                 # Custom projection configuration
 │   └── settings.json               # Pipeline confidence settings
 ├── data/
 │   ├── ats.json                    # Sample structured ATS data
-│   └── resume.docx                 # Sample unstructured resume
+│   ├── resume.docx                 # Sample unstructured resume
+│   ├── recruiter_export.csv        # Sample recruiter CSV export
+│   └── recruiter_notes.txt         # Sample recruiter free text notes
 ├── output/
 │   ├── candidate_profile.json      # Output projected profile
 │   ├── canonical_profile.json      # Raw intermediate canonical profile
@@ -68,7 +171,11 @@ eightfold-assignment/
 │   │   └── normalizer.py           # Field normalizations (dates, country, skills, etc.)
 │   └── parsers/
 │       ├── ats_parser.py           # Structured ATS JSON mapping
-│       └── resume_parser.py        # Text & heuristic Resume entity extractor
+│       ├── csv_parser.py           # Recruiter CSV export mapping
+│       ├── resume_parser.py        # Text & heuristic Resume entity extractor
+│       ├── recruiter_notes_parser.py # Recruiter notes parser
+│       ├── github_parser.py        # GitHub API URL fetcher
+│       └── linkedin_parser.py      # LinkedIn URL parameter solver
 └── tests/                          # Test suite
 ```
 
@@ -76,10 +183,10 @@ eightfold-assignment/
 
 ## Installation
 
-Install the required dependencies:
+Install all package dependencies via `requirements.txt`:
 
 ```bash
-pip3 install python-docx pdfplumber phonenumbers pydantic
+pip install -r requirements.txt
 ```
 
 ---
@@ -97,11 +204,15 @@ python3 -m src.main
 You can customize the input files, configuration, and output location using flags:
 
 ```bash
-python3 -m src.main --ats data/ats.json --resume data/resume.docx --config configs/custom.json --output output/candidate_profile_custom.json
+python3 -m src.main --ats data/ats.json --resume data/resume.docx --csv data/recruiter_export.csv --notes data/recruiter_notes.txt --github https://github.com/kruthinreddy95 --linkedin https://linkedin.com/in/pillikandla-kruthin-reddy-b97245289 --config configs/default.json --output output/candidate_profile_all.json
 ```
 
-- `--ats`: Path to ATS JSON file (default: `data/ats.json`)
-- `--resume`: Path to Resume file (default: `data/resume.docx`)
+- `--ats`: Path to ATS JSON file
+- `--resume`: Path to Resume file
+- `--csv`: Path to Recruiter CSV export file
+- `--notes`: Path to Recruiter notes free text file
+- `--github`: GitHub profile URL
+- `--linkedin`: LinkedIn profile URL
 - `--config`: Path to projection config JSON (default: `configs/default.json`)
 - `--output`: Path to save the final projected profile (default: `output/candidate_profile.json`)
 
@@ -123,7 +234,7 @@ The runtime projection config supports:
 1. `fields`: An array of items specifying:
    - `path`: The key name in the output profile.
    - `from`: The path in the canonical model (e.g. `emails[0]`, `phones[0]`, `skills[].name`).
-   - `type`: Target validator type (`string`, `string[]`, `number`, `object`).
+   - `type`: Target validator type (`string`, `string[]`, `number`, `object`, `object[]`).
    - `normalize`: Conversion normalizations (`E164`, `canonical`, `upper`, `lower`).
    - `required`: Strict check validation boolean.
 2. `include_confidence`: Toggle inclusion of `overall_confidence`.
