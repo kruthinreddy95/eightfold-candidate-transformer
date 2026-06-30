@@ -17,6 +17,9 @@ The engine features robust confidence-based conflict resolution, agreement-based
 The platform utilizes a structured, 5-stage transformation pipeline to clean, reconcile, and reshape candidate profiles. 
 
 ### Pipeline Diagram
+
+![System Architecture Diagram](architecture_diagram.png)
+
 ```mermaid
 graph TD
     classDef inputStyle fill:#f8fafc,stroke:#64748b,stroke-width:2px,color:#334155,stroke-dasharray: 4 4;
