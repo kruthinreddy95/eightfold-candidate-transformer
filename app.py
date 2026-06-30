@@ -29,339 +29,412 @@ st.set_page_config(
 # ── Global CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-/* ── Typography & base ─────────────────────────────────────────────── */
+/* ── Apple-like Typography & Base ───────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 html, body, [class*="css"] {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
-/* ── Page background ───────────────────────────────────────────────── */
-.stApp { background: #F1F5F9; }
+/* ── Page Background ───────────────────────────────────────────────── */
+.stApp { background: #f5f5f7 !important; }
 .block-container { padding: 1.5rem 2.5rem 3rem; max-width: 1400px; }
 
-/* ── Top navigation bar ────────────────────────────────────────────── */
+/* ── Apple Header Navigation Bar ───────────────────────────────────── */
 .portal-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #0F172A;
-    color: #F8FAFC;
-    padding: 0 2rem;
-    height: 56px;
-    margin: -1.5rem -2.5rem 1.5rem;
-    border-bottom: 3px solid #2563EB;
+    background: rgba(29, 29, 31, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #f5f5f7;
+    padding: 0 3rem;
+    height: 48px;
+    margin: -1.5rem -2.5rem 0;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.05);
 }
 .portal-nav .brand {
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #f5f5f7;
 }
-.portal-nav .brand span { color: #60A5FA; }
+.portal-nav .brand span { color: #86868b; font-weight: 400; }
 .portal-nav .nav-meta {
-    font-size: 0.78rem;
-    color: #94A3B8;
-    letter-spacing: 0.02em;
+    font-size: 0.72rem;
+    color: #86868b;
+    font-weight: 500;
 }
 
-/* ── Section headings ──────────────────────────────────────────────── */
-.section-title {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #64748B;
-    margin: 1.2rem 0 0.5rem;
-    padding-bottom: 0.3rem;
-    border-bottom: 1px solid #E2E8F0;
+/* ── Apple Education Store Banner ──────────────────────────────────── */
+.apple-banner {
+    background: #f5f5f7;
+    color: #1d1d1f;
+    font-size: 0.78rem;
+    font-weight: 400;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    margin: 0 -2.5rem 2rem;
+    border-bottom: 1px solid #d2d2d7;
+    letter-spacing: -0.01em;
 }
+
+/* ── Apple-style Hero Typography ────────────────────────────────────── */
 .page-title {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #0F172A;
-    margin-bottom: 0.15rem;
+    font-size: 2.4rem !important;
+    font-weight: 700 !important;
+    color: #1d1d1f !important;
+    letter-spacing: -0.03em !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.4rem !important;
+    text-align: center !important;
 }
 .page-subtitle {
-    font-size: 0.83rem;
-    color: #64748B;
-    margin-bottom: 1.2rem;
+    font-size: 1.05rem !important;
+    color: #86868b !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.015em !important;
+    margin-bottom: 2.5rem !important;
+    text-align: center !important;
+    max-width: 850px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    line-height: 1.5 !important;
+}
+.section-title {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: #86868b !important;
+    margin: 1.5rem 0 0.6rem !important;
+    padding-bottom: 0.4rem !important;
+    border-bottom: 1px solid #e5e5e7 !important;
 }
 
-/* ── Cards ─────────────────────────────────────────────────────────── */
-.card {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+/* ── Apple Rounded Product Cards ───────────────────────────────────── */
+.card, .input-panel {
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 18px !important;
+    padding: 1.5rem 1.75rem !important;
+    margin-bottom: 1.25rem !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+.card:hover, .input-panel:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02) !important;
 }
 .card-sm {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
-    padding: 1rem 1.2rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    background: #ffffff !important;
+    border: 1px solid #e5e5e7 !important;
+    border-radius: 14px !important;
+    padding: 1.2rem 1.4rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.2s ease-in-out !important;
     height: 100%;
+}
+.card-sm:hover {
+    border-color: #0071e3 !important;
+    box-shadow: 0 4px 16px rgba(0, 113, 227, 0.08) !important;
 }
 .card-sm.selected {
-    border-color: #2563EB;
-    box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+    border-color: #0071e3 !important;
+    border-width: 2px !important;
 }
+
 .candidate-name {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #0F172A;
-    margin-bottom: 0.25rem;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    color: #1d1d1f !important;
+    margin-bottom: 0.3rem !important;
+    letter-spacing: -0.01em !important;
 }
 .candidate-meta {
-    font-size: 0.76rem;
-    color: #64748B;
-    margin-bottom: 0.6rem;
-    line-height: 1.5;
+    font-size: 0.78rem !important;
+    color: #86868b !important;
+    margin-bottom: 0.6rem !important;
+    line-height: 1.5 !important;
 }
 .candidate-id {
-    font-size: 0.68rem;
-    color: #94A3B8;
-    font-family: 'SFMono-Regular', Consolas, monospace;
-    word-break: break-all;
-    margin-bottom: 0.7rem;
+    font-size: 0.7rem !important;
+    color: #86868b !important;
+    font-family: Menlo, Monaco, monospace !important;
+    word-break: break-all !important;
+    margin-bottom: 0.8rem !important;
 }
 
-/* ── Badges / pills ────────────────────────────────────────────────── */
+/* ── Apple Rounded Pills (Badges) ─────────────────────────────────── */
 .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.75rem; }
 .badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 600;
-    border-radius: 4px;
-    padding: 2px 8px;
-    letter-spacing: 0.02em;
+    display: inline-block !important;
+    font-size: 0.68rem !important;
+    font-weight: 500 !important;
+    border-radius: 980px !important;
+    padding: 3px 10px !important;
+    letter-spacing: 0.01em !important;
+    border: none !important;
 }
-.badge-blue  { background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; }
-.badge-green { background: #F0FDF4; color: #166534; border: 1px solid #BBF7D0; }
-.badge-purple{ background: #FAF5FF; color: #6B21A8; border: 1px solid #E9D5FF; }
-.badge-gray  { background: #F8FAFC; color: #475569; border: 1px solid #CBD5E1; }
+.badge-blue  { background: #e8f2fc !important; color: #0071e3 !important; }
+.badge-green { background: #eaf6ed !important; color: #1d803f !important; }
+.badge-purple{ background: #f4ecf9 !important; color: #8622c3 !important; }
+.badge-gray  { background: #f5f5f7 !important; color: #1d1d1f !important; }
 
-/* ── Stat tiles ────────────────────────────────────────────────────── */
+/* ── Stat Tiles ────────────────────────────────────────────────────── */
 .stat-tile {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    text-align: center;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    background: #ffffff !important;
+    border: 1px solid #e5e5e7 !important;
+    border-radius: 12px !important;
+    padding: 1.1rem 1.3rem !important;
+    text-align: center !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.01) !important;
+    transition: all 0.2s ease !important;
+}
+.stat-tile:hover {
+    border-color: #d2d2d7 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
 }
 .stat-value {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #0F172A;
-    line-height: 1.1;
+    font-size: 1.7rem !important;
+    font-weight: 700 !important;
+    color: #1d1d1f !important;
+    letter-spacing: -0.02em !important;
 }
 .stat-label {
-    font-size: 0.72rem;
-    color: #64748B;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-top: 0.2rem;
+    font-size: 0.72rem !important;
+    color: #86868b !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-top: 0.25rem !important;
 }
 
-/* ── Confidence bar ────────────────────────────────────────────────── */
-.conf-bar-wrap { margin: 0.4rem 0; }
+/* ── Apple-style Progress Indicator ────────────────────────────────── */
+.conf-bar-wrap { margin: 0.5rem 0; }
 .conf-label {
-    font-size: 0.72rem;
-    color: #475569;
+    font-size: 0.76rem !important;
+    color: #1d1d1f !important;
+    font-weight: 500 !important;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 .conf-bar-bg {
-    background: #E2E8F0;
-    border-radius: 100px;
-    height: 6px;
-    overflow: hidden;
+    background: #e5e5e7 !important;
+    border-radius: 100px !important;
+    height: 7px !important;
+    overflow: hidden !important;
 }
 .conf-bar-fill {
-    height: 100%;
-    border-radius: 100px;
-    background: linear-gradient(90deg, #2563EB, #60A5FA);
+    height: 100% !important;
+    border-radius: 100px !important;
+    background: #0071e3 !important;
 }
 
-/* ── Detail panel header ────────────────────────────────────────────── */
+/* ── Detail Panel Header ────────────────────────────────────────────── */
 .detail-header {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-left: 4px solid #2563EB;
-    border-radius: 8px;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    background: #ffffff !important;
+    border: none !important;
+    border-left: 5px solid #0071e3 !important;
+    border-radius: 14px !important;
+    padding: 1.25rem 1.75rem !important;
+    margin-bottom: 1.25rem !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
 }
 .detail-header .dh-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #0F172A;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #1d1d1f !important;
+    letter-spacing: -0.02em !important;
 }
 .detail-header .dh-meta {
-    font-size: 0.76rem;
-    color: #64748B;
-    margin-top: 0.2rem;
-    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.78rem !important;
+    color: #86868b !important;
+    margin-top: 0.3rem !important;
+    font-family: Menlo, Monaco, monospace !important;
 }
 
-/* ── Info row (contact/links) ──────────────────────────────────────── */
-.info-row { margin-bottom: 0.5rem; }
+/* ── Info Row ──────────────────────────────────────────────────────── */
+.info-row { margin-bottom: 0.7rem; }
 .info-label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #94A3B8;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #86868b !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
 }
 .info-value {
-    font-size: 0.85rem;
-    color: #1E293B;
-    margin-top: 1px;
-    word-break: break-all;
+    font-size: 0.88rem !important;
+    color: #1d1d1f !important;
+    margin-top: 2px !important;
+    font-weight: 400 !important;
 }
 
-/* ── Skill chip ─────────────────────────────────────────────────────── */
+/* ── Apple Store Spec Chips (Skills) ────────────────────────────────── */
 .skill-chip {
-    display: inline-block;
-    background: #F8FAFC;
-    border: 1px solid #CBD5E1;
-    border-radius: 4px;
-    padding: 4px 10px;
-    font-size: 0.76rem;
-    color: #334155;
-    margin: 3px 3px 0 0;
-    font-weight: 500;
+    display: inline-block !important;
+    background: #f5f5f7 !important;
+    border: none !important;
+    border-radius: 980px !important;
+    padding: 6px 14px !important;
+    font-size: 0.78rem !important;
+    color: #1d1d1f !important;
+    margin: 4px 4px 0 0 !important;
+    font-weight: 500 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
 }
 .skill-conf {
-    font-size: 0.68rem;
-    color: #94A3B8;
-    display: block;
-    text-align: center;
-    margin-top: 1px;
+    font-size: 0.68rem !important;
+    color: #86868b !important;
+    display: inline !important;
+    margin-left: 6px !important;
+    font-family: Menlo, Monaco, monospace !important;
 }
 
-/* ── Timeline (experience/education) ─────────────────────────────── */
+/* ── Apple-style Spec Timeline ────────────────────────────────────── */
 .timeline-item {
-    border-left: 2px solid #E2E8F0;
-    padding-left: 1rem;
-    margin-bottom: 1.25rem;
-    position: relative;
+    border-left: 2px solid #e5e5e7 !important;
+    padding-left: 1.2rem !important;
+    margin-bottom: 1.5rem !important;
+    position: relative !important;
 }
 .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -5px;
-    top: 5px;
-    width: 8px;
-    height: 8px;
-    background: #2563EB;
-    border-radius: 50%;
+    content: '' !important;
+    position: absolute !important;
+    left: -5px !important;
+    top: 5px !important;
+    width: 8px !important;
+    height: 8px !important;
+    background: #0071e3 !important;
+    border-radius: 50% !important;
 }
 .timeline-title {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #0F172A;
+    font-size: 0.92rem !important;
+    font-weight: 600 !important;
+    color: #1d1d1f !important;
+    letter-spacing: -0.01em !important;
 }
 .timeline-sub {
-    font-size: 0.78rem;
-    color: #64748B;
-    margin-top: 2px;
+    font-size: 0.8rem !important;
+    color: #86868b !important;
+    margin-top: 2px !important;
 }
 .timeline-date {
-    font-size: 0.72rem;
-    color: #94A3B8;
-    font-family: monospace;
-    margin-top: 2px;
+    font-size: 0.72rem !important;
+    color: #86868b !important;
+    font-family: Menlo, Monaco, monospace !important;
+    margin-top: 3px !important;
 }
 .timeline-body {
-    font-size: 0.8rem;
-    color: #475569;
-    margin-top: 0.4rem;
-    line-height: 1.6;
+    font-size: 0.82rem !important;
+    color: #1d1d1f !important;
+    margin-top: 0.5rem !important;
+    line-height: 1.55 !important;
 }
 
-/* ── Input panel ────────────────────────────────────────────────────── */
-.input-panel {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-
-/* ── Streamlit overrides ─────────────────────────────────────────── */
+/* ── Streamlit UI Controls (Apple Style Overrides) ───────────────────── */
 .stButton > button {
-    font-family: 'Inter', sans-serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif !important;
     font-weight: 500 !important;
-    border-radius: 6px !important;
-    font-size: 0.83rem !important;
+    border-radius: 980px !important; /* Pill style */
+    padding: 8px 18px !important;
+    font-size: 0.85rem !important;
+    letter-spacing: -0.01em !important;
+    transition: all 0.2s ease-in-out !important;
 }
 .stButton > button[kind="primary"] {
-    background: #2563EB !important;
+    background: #0071e3 !important; /* Apple Blue */
     border: none !important;
-    color: #FFFFFF !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.15) !important;
 }
 .stButton > button[kind="primary"]:hover {
-    background: #1D4ED8 !important;
+    background: #0077ed !important;
+    box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25) !important;
+    transform: translateY(-1px) !important;
 }
 .stButton > button[kind="secondary"] {
-    background: #FFFFFF !important;
-    border: 1px solid #CBD5E1 !important;
-    color: #374151 !important;
+    background: #f5f5f7 !important;
+    border: none !important;
+    color: #1d1d1f !important;
 }
 .stButton > button[kind="secondary"]:hover {
-    border-color: #94A3B8 !important;
-    background: #F8FAFC !important;
+    background: #e8e8ed !important;
+    color: #1d1d1f !important;
 }
+
+/* ── Metrics Overrides ─────────────────────────────────────────────── */
 div[data-testid="stMetricValue"] {
-    font-size: 1.15rem !important;
-    font-weight: 600 !important;
-    color: #0F172A !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #1d1d1f !important;
+    letter-spacing: -0.02em !important;
 }
 div[data-testid="stMetricLabel"] {
     font-size: 0.72rem !important;
-    color: #64748B !important;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: #86868b !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
 }
-.stProgress > div > div { background-color: #2563EB !important; border-radius: 100px !important; }
+
+/* ── Progress Indicators ───────────────────────────────────────────── */
+.stProgress > div > div { background-color: #0071e3 !important; border-radius: 100px !important; }
+
+/* ── Tabs Overrides (Pill style switcher) ─────────────────────────── */
 .stTabs [data-baseweb="tab-list"] {
-    gap: 0;
-    border-bottom: 1px solid #E2E8F0;
-    background: transparent;
+    gap: 0 !important;
+    border-bottom: 1px solid #e5e5e7 !important;
+    background: transparent !important;
+    margin-bottom: 1rem !important;
 }
 .stTabs [data-baseweb="tab"] {
-    font-size: 0.8rem !important;
+    font-size: 0.85rem !important;
     font-weight: 500 !important;
-    color: #64748B !important;
-    padding: 0.55rem 1.1rem !important;
+    color: #86868b !important;
+    padding: 0.6rem 1.2rem !important;
     border-radius: 0 !important;
     border: none !important;
     background: transparent !important;
 }
 .stTabs [aria-selected="true"] {
-    color: #2563EB !important;
-    border-bottom: 2px solid #2563EB !important;
+    color: #0071e3 !important;
+    border-bottom: 2px solid #0071e3 !important;
     font-weight: 600 !important;
 }
-.stTextInput > div > div > input, .stFileUploader {
-    border-radius: 6px !important;
+
+/* ── Form Input Fields ─────────────────────────────────────────────── */
+.stTextInput > div > div > input {
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #d2d2d7 !important;
+    font-size: 0.85rem !important;
+    color: #1d1d1f !important;
+    padding: 8px 12px !important;
+}
+.stTextInput > div > div > input:focus {
+    border-color: #0071e3 !important;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15) !important;
+}
+.stFileUploader {
+    border-radius: 12px !important;
     font-size: 0.83rem !important;
+    border: 1px dashed #d2d2d7 !important;
+    background-color: #ffffff !important;
+    padding: 0.5rem !important;
 }
 .stAlert {
-    border-radius: 6px !important;
-    font-size: 0.82rem !important;
+    border-radius: 12px !important;
+    font-size: 0.85rem !important;
+    border: none !important;
 }
-[data-testid="stDataFrame"] { border-radius: 8px; overflow: hidden; }
-hr { border-color: #E2E8F0 !important; margin: 1rem 0 !important; }
+
+[data-testid="stDataFrame"] { border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e7; }
+hr { border-color: #e5e5e7 !important; margin: 1.25rem 0 !important; }
 </style>
+""", unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 
 # ── Session state ──────────────────────────────────────────────────────────────
@@ -560,6 +633,9 @@ st.markdown("""
 <div class="portal-nav">
     <div class="brand">EIGHTFOLD <span>/ Talent Intelligence Platform</span></div>
     <div class="nav-meta">Recruiter Portal &nbsp;&middot;&nbsp; Candidate Ingestion</div>
+</div>
+<div class="apple-banner">
+    Save hours on candidate screening. Ingest and cross-verify candidates from multiple sources in real-time.
 </div>
 """, unsafe_allow_html=True)
 
