@@ -37,8 +37,26 @@ def find_field(data, field_name):
     return None
 
 
+def _flatten(data):
+    """
+    Hoist common nested sub-objects (contact, urls, personal_info, etc.)
+    to the root level so alias resolution can find them.
+    Fields already at root are NOT overwritten.
+    """
+    flat = dict(data)
+    nested_keys = ["contact", "urls", "personal_info", "candidate_info", "profile"]
+    for key in nested_keys:
+        sub = data.get(key)
+        if isinstance(sub, dict):
+            for k, v in sub.items():
+                if k not in flat:
+                    flat[k] = v
+    return flat
+
+
 def parse(data):
     result = {}
+    data = _flatten(data)
 
     # Full Name
     name = find_field(data, "full_name")

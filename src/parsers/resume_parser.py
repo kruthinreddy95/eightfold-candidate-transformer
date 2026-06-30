@@ -10,6 +10,7 @@ import re
 from docx import Document
 import pdfplumber
 import phonenumbers
+from src.normalizers.normalizer import normalize_date
 
 SOURCE = "resume_docx"
 try:
@@ -246,21 +247,26 @@ def parse_experience_section(lines):
         if is_new_exp:
             if current_exp:
                 experience.append(current_exp)
-                
+
             if date_match:
                 date_str = date_match.group(0)
-                dates = [d.strip() for d in re.split(r'-|–|to', date_str)]
-                start_date = dates[0]
-                end_date = dates[1] if len(dates) > 1 else "Present"
+                # Split on dash/en-dash/"to" but not inside a year like "2024-09"
+                # Use a separator that won't chop month abbreviations
+                parts = re.split(r'\s*(?:–|—|\bto\b)\s*|\s+-\s+', date_str)
+                if len(parts) == 1:
+                    # fallback: split on any single dash surrounded by spaces
+                    parts = re.split(r'-', date_str, maxsplit=1)
+                start_date = normalize_date(parts[0].strip())
+                end_date = normalize_date(parts[1].strip()) if len(parts) > 1 else "Present"
             elif single_date_match:
-                start_date = single_date_match.group(0)
+                start_date = normalize_date(single_date_match.group(0))
                 end_date = "Present"
-                
+
             if title:
                 title = re.sub(r'\s+', ' ', title).strip()
             if company:
                 company = re.sub(r'\s+', ' ', company).strip()
-                
+
             current_exp = {
                 "company": company or "Unknown",
                 "title": title or "Unknown",
@@ -316,20 +322,32 @@ def parse_education_section(lines):
             
             institution = None
             end_year = None
-            if i + 1 < len(lines):
-                next_line = lines[i+1].strip()
-                institution_parts = [p.strip() for p in next_line.split("|")]
-                institution = institution_parts[0]
-                
-                years = re.findall(r'\b(20\d{2}|19\d{2})\b', next_line)
-                if years:
-                    end_year = int(years[-1])
-                i += 1
-            
+
+            # First check the current line itself for a year
+            years_on_line = re.findall(r'\b(20\d{2}|19\d{2})\b', line)
+            if years_on_line:
+                end_year = int(years_on_line[-1])
+
+            # Look ahead up to 2 lines for institution + year
+            for lookahead in range(1, 3):
+                if i + lookahead < len(lines):
+                    next_line = lines[i + lookahead].strip()
+                    if not next_line:
+                        continue
+                    # Use the first non-empty lookahead line as institution
+                    if institution is None:
+                        institution_parts = [p.strip() for p in next_line.split("|")]
+                        institution = institution_parts[0]
+                        years = re.findall(r'\b(20\d{2}|19\d{2})\b', next_line)
+                        if years and end_year is None:
+                            end_year = int(years[-1])
+                        i += 1
+                        break
+
             degree = re.sub(r'\s*(?:CGPA|%|Percent|Score|Grade).*$', '', degree, flags=re.IGNORECASE).strip()
             degree = re.sub(r'\s*\b\d+(?:\.\d+)?%?\b', '', degree)
             degree = re.sub(r'\s+', ' ', degree).strip()
-            
+
             education.append({
                 "institution": institution,
                 "degree": degree,
@@ -415,9 +433,12 @@ def parse_resume(path):
     header_lines = sections.get("HEADER", [])
     if header_lines:
         name = header_lines[0].strip()
-        # Ensure it's not a list of sections or too long
-        if len(name.split()) > 6 or name.isupper() and any(h in name for h in ["RESUME", "CURRICULUM"]):
+        # Reject if it looks like a section header / too long
+        if len(name.split()) > 6 or (name.isupper() and any(h in name for h in ["RESUME", "CURRICULUM"])):
             name = None
+        # Normalize all-caps names to Title Case
+        if name and name.isupper():
+            name = name.title()
 
     # 2. Headline
     headline = None
