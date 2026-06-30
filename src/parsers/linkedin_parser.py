@@ -32,22 +32,18 @@ def parse_linkedin(url):
 
     result = {}
     
-    formatted_name = slug.split("-")[0].title() if "-" in slug else slug.title()
-    if "pillikandla" in slug.lower() or "kruthin" in slug.lower():
-        formatted_name = "Pillikandla Kruthin Reddy"
+    # Dynamically extract name parts from slug, filtering out numeric suffix IDs
+    slug_parts = slug.split("-")
+    name_parts = []
+    for part in slug_parts:
+        if not re.search(r'\d', part):
+            name_parts.append(part.title())
+            
+    formatted_name = " ".join(name_parts)
+    if formatted_name:
+        result["full_name"] = tagged(formatted_name)
         
-    result["full_name"] = tagged(formatted_name)
-    result["headline"] = tagged(f"Software Developer Intern Candidate via LinkedIn ({slug})")
-    
     links_dict = {"linkedin": url, "github": None, "portfolio": None, "other": []}
     result["links"] = tagged(links_dict)
-    
-    result["experience"] = [{
-        "company": "LinkedIn Connection",
-        "title": "Software Developer Intern",
-        "start": "2025-05",
-        "end": "Present",
-        "summary": "Imported experience block from LinkedIn URL."
-    }]
     
     return result
