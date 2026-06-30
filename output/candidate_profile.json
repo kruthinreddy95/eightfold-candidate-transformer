@@ -2,12 +2,10 @@
   "candidate_id": "8f4e76e1359002c69d634f7eaaa028a8",
   "full_name": "Kruthin Reddy",
   "emails": [
-    "kruthin@gmail.com",
-    "kruthinreddy95@gmail.com"
+    "kruthin@gmail.com"
   ],
   "phones": [
-    "+919876543210",
-    "+919502235163"
+    "+919876543210"
   ],
   "location": {
     "city": "Chennai",
@@ -46,56 +44,7 @@
       ]
     },
     {
-      "name": "Polymorphism",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Page Structure",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
       "name": "Styling and Layouts",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Analytical Thinking",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Microsoft Copilot",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Responsive Web Design",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Problem Solving",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "RDBMS Concepts",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
@@ -109,126 +58,7 @@
       ]
     },
     {
-      "name": "Java",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Team Collaboration",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Virtual Machines",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Hypervisors",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Virtualization",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "GitHub",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Basic Stored Procedures",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Cloud Infrastructure",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Encapsulation",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "VS Code",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Cloud Computing Fundamentals",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "OOP",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "CSS",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "OOP in Python and Java",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Quick Learning",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
       "name": "Queries",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Inheritance",
-      "confidence": 0.75,
-      "sources": [
-        "resume_docx"
-      ]
-    },
-    {
-      "name": "Relational Database Design",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
@@ -242,7 +72,35 @@
       ]
     },
     {
-      "name": "Communication",
+      "name": "Microsoft Copilot",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "GitHub",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Relational Database Design",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Encapsulation",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Problem Solving",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
@@ -250,6 +108,146 @@
     },
     {
       "name": "Joins",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Quick Learning",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Java",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Basic Stored Procedures",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Team Collaboration",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Hypervisors",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "CSS",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Cloud Computing Fundamentals",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "VS Code",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Virtual Machines",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Polymorphism",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Inheritance",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Responsive Web Design",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Virtualization",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Cloud Infrastructure",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Analytical Thinking",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Page Structure",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "OOP in Python and Java",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "OOP",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "RDBMS Concepts",
+      "confidence": 0.75,
+      "sources": [
+        "resume_docx"
+      ]
+    },
+    {
+      "name": "Communication",
       "confidence": 0.75,
       "sources": [
         "resume_docx"
@@ -306,7 +304,7 @@
       "end_year": 2021
     }
   ],
-  "overall_confidence": 0.78,
+  "overall_confidence": 0.79,
   "provenance": [
     {
       "field": "full_name",
@@ -340,17 +338,17 @@
     },
     {
       "field": "emails",
-      "source": "ats_json, resume_docx",
-      "method": "union"
+      "source": "ats_json",
+      "method": "highest_confidence_primary"
     },
     {
       "field": "phones",
-      "source": "ats_json, resume_docx",
-      "method": "union"
+      "source": "ats_json",
+      "method": "highest_confidence_primary"
     }
   ],
   "metrics": {
     "skills_detected": 33,
-    "emails_detected": 2
+    "emails_detected": 1
   }
 }

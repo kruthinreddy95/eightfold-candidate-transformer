@@ -113,55 +113,41 @@ def merge(profiles):
     else:
         result["links"] = None
 
-    # Resolve Emails (Union merge)
-    emails = []
-    email_confs = []
-    email_sources = set()
+    # Resolve Emails (Select primary email from highest-confidence source)
+    email_candidates = []
     for profile in valid_profiles:
-        if "emails" in profile and profile["emails"]:
-            val = profile["emails"]["value"]
-            conf = profile["emails"]["confidence"]
-            src = profile["emails"]["source"]
-            for email in val:
-                if email not in emails:
-                    emails.append(email)
-            email_confs.append(conf)
-            email_sources.add(src)
+        if "emails" in profile and profile["emails"] and profile["emails"]["value"]:
+            email_candidates.append(profile["emails"])
             
-    if emails:
-        result["emails"] = emails
+    if email_candidates:
+        winner = max(email_candidates, key=lambda x: x["confidence"])
+        primary_email = winner["value"][0]
+        result["emails"] = [primary_email]
         provenance.append({
             "field": "emails",
-            "source": ", ".join(sorted(list(email_sources))),
-            "method": "union"
+            "source": winner["source"],
+            "method": "highest_confidence_primary"
         })
-        field_confidences.append(sum(email_confs) / len(email_confs))
+        field_confidences.append(winner["confidence"])
     else:
         result["emails"] = []
 
-    # Resolve Phones (Union merge)
-    phones = []
-    phone_confs = []
-    phone_sources = set()
+    # Resolve Phones (Select primary phone from highest-confidence source)
+    phone_candidates = []
     for profile in valid_profiles:
-        if "phones" in profile and profile["phones"]:
-            val = profile["phones"]["value"]
-            conf = profile["phones"]["confidence"]
-            src = profile["phones"]["source"]
-            for phone in val:
-                if phone not in phones:
-                    phones.append(phone)
-            phone_confs.append(conf)
-            phone_sources.add(src)
+        if "phones" in profile and profile["phones"] and profile["phones"]["value"]:
+            phone_candidates.append(profile["phones"])
             
-    if phones:
-        result["phones"] = phones
+    if phone_candidates:
+        winner = max(phone_candidates, key=lambda x: x["confidence"])
+        primary_phone = winner["value"][0]
+        result["phones"] = [primary_phone]
         provenance.append({
             "field": "phones",
-            "source": ", ".join(sorted(list(phone_sources))),
-            "method": "union"
+            "source": winner["source"],
+            "method": "highest_confidence_primary"
         })
-        field_confidences.append(sum(phone_confs) / len(phone_confs))
+        field_confidences.append(winner["confidence"])
     else:
         result["phones"] = []
 

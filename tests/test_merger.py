@@ -28,9 +28,8 @@ class TestMerger(unittest.TestCase):
         self.assertIsNotNone(result)
         # Winner for full_name should be Kruthin Reddy (confidence 0.90)
         self.assertEqual(result["full_name"], "Kruthin Reddy")
-        # Emails should have both
-        self.assertIn("kruthin@gmail.com", result["emails"])
-        self.assertIn("kruthinreddy95@gmail.com", result["emails"])
+        # Emails should keep highest-confidence primary
+        self.assertEqual(result["emails"], ["kruthinreddy95@gmail.com"])
         # Skills should be combined, and Python should be boosted since it appears in both
         skills_map = {s["name"]: s for s in result["skills"]}
         self.assertIn("Python", skills_map)
