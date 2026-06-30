@@ -29,275 +29,270 @@ st.set_page_config(
 # ── Global CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-/* ── Apple-like Typography & Base ───────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* ── SBI Corporate Typography & Base ────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
 html, body, [class*="css"] {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: "Open Sans", "Segoe UI", Roboto, Arial, sans-serif !important;
 }
 
 /* ── Page Background ───────────────────────────────────────────────── */
-.stApp { background: #f5f5f7 !important; }
+.stApp { background: #f4f8fb !important; }
 .block-container { padding: 1.5rem 2.5rem 3rem; max-width: 1400px; }
 
-/* ── Apple Header Navigation Bar ───────────────────────────────────── */
+/* ── SBI Header Navigation Bar ─────────────────────────────────────── */
 .portal-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(29, 29, 31, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    color: #f5f5f7;
-    padding: 0 3rem;
-    height: 48px;
+    background: #0a3a60; /* SBI Corporate Blue */
+    color: #ffffff;
+    padding: 0 2.5rem;
+    height: 54px;
     margin: -1.5rem -2.5rem 0;
-    box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+    border-bottom: 4px solid #00b8df; /* SBI Cyan Accent */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .portal-nav .brand {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: #f5f5f7;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #ffffff;
 }
-.portal-nav .brand span { color: #86868b; font-weight: 400; }
+.portal-nav .brand span { color: #00b8df; font-weight: 500; }
 .portal-nav .nav-meta {
-    font-size: 0.72rem;
-    color: #86868b;
-    font-weight: 500;
+    font-size: 0.76rem;
+    color: #b0d4f0;
+    font-weight: 600;
 }
 
-/* ── Apple Education Store Banner ──────────────────────────────────── */
+/* ── SBI Corporate Notice Banner ───────────────────────────────────── */
 .apple-banner {
-    background: #f5f5f7;
-    color: #1d1d1f;
+    background: #e8f7fa; /* Light Cyan */
+    color: #0a3a60;
     font-size: 0.78rem;
-    font-weight: 400;
+    font-weight: 600;
     text-align: center;
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 1rem;
     margin: 0 -2.5rem 2rem;
-    border-bottom: 1px solid #d2d2d7;
-    letter-spacing: -0.01em;
+    border-bottom: 1px solid #bce6ee;
+    letter-spacing: 0.01em;
 }
 
-/* ── Apple-style Hero Typography ────────────────────────────────────── */
+/* ── Corporate Hero Typography ─────────────────────────────────────── */
 .page-title {
-    font-size: 2.4rem !important;
+    font-size: 1.85rem !important;
     font-weight: 700 !important;
-    color: #1d1d1f !important;
-    letter-spacing: -0.03em !important;
-    margin-top: 1.5rem !important;
-    margin-bottom: 0.4rem !important;
+    color: #0a3a60 !important;
+    letter-spacing: -0.01em !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 0.3rem !important;
     text-align: center !important;
 }
 .page-subtitle {
-    font-size: 1.05rem !important;
-    color: #86868b !important;
+    font-size: 0.92rem !important;
+    color: #536878 !important;
     font-weight: 400 !important;
-    letter-spacing: -0.015em !important;
-    margin-bottom: 2.5rem !important;
+    margin-bottom: 2.25rem !important;
     text-align: center !important;
-    max-width: 850px !important;
+    max-width: 800px !important;
     margin-left: auto !important;
     margin-right: auto !important;
     line-height: 1.5 !important;
 }
 .section-title {
     font-size: 0.75rem !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.08em !important;
-    color: #86868b !important;
-    margin: 1.5rem 0 0.6rem !important;
-    padding-bottom: 0.4rem !important;
-    border-bottom: 1px solid #e5e5e7 !important;
+    letter-spacing: 0.06em !important;
+    color: #0a3a60 !important;
+    margin: 1.3rem 0 0.5rem !important;
+    padding-bottom: 0.3rem !important;
+    border-bottom: 2px solid #00b8df !important;
 }
 
-/* ── Apple Rounded Product Cards ───────────────────────────────────── */
+/* ── SBI Rounded Left-Border Cards ─────────────────────────────────── */
 .card, .input-panel {
     background: #ffffff !important;
-    border: none !important;
-    border-radius: 18px !important;
-    padding: 1.5rem 1.75rem !important;
-    margin-bottom: 1.25rem !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    border: 1px solid #d0e0ed !important;
+    border-left: 5px solid #00b8df !important; /* Left teal border */
+    border-radius: 8px !important;
+    padding: 1.3rem 1.5rem !important;
+    margin-bottom: 1.1rem !important;
+    box-shadow: 0 2px 6px rgba(10,58,96,0.04) !important;
+    transition: all 0.25s ease-in-out !important;
 }
 .card:hover, .input-panel:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+    border-color: #0a3a60 !important;
+    box-shadow: 0 4px 14px rgba(10,58,96,0.08) !important;
 }
 .card-sm {
     background: #ffffff !important;
-    border: 1px solid #e5e5e7 !important;
-    border-radius: 14px !important;
-    padding: 1.2rem 1.4rem !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
-    transition: all 0.2s ease-in-out !important;
+    border: 1px solid #d0e0ed !important;
+    border-left: 4px solid #0a3a60 !important; /* Left navy border */
+    border-radius: 6px !important;
+    padding: 1.1rem 1.25rem !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.2s ease !important;
     height: 100%;
 }
 .card-sm:hover {
-    border-color: #0071e3 !important;
-    box-shadow: 0 4px 16px rgba(0, 113, 227, 0.08) !important;
+    border-color: #00b8df !important;
+    box-shadow: 0 3px 10px rgba(0, 184, 223, 0.08) !important;
 }
 .card-sm.selected {
-    border-color: #0071e3 !important;
+    border-color: #00b8df !important;
     border-width: 2px !important;
 }
 
 .candidate-name {
-    font-size: 1.05rem !important;
-    font-weight: 600 !important;
-    color: #1d1d1f !important;
-    margin-bottom: 0.3rem !important;
-    letter-spacing: -0.01em !important;
+    font-size: 1.02rem !important;
+    font-weight: 700 !important;
+    color: #0a3a60 !important;
+    margin-bottom: 0.25rem !important;
 }
 .candidate-meta {
     font-size: 0.78rem !important;
-    color: #86868b !important;
-    margin-bottom: 0.6rem !important;
+    color: #536878 !important;
+    margin-bottom: 0.5rem !important;
     line-height: 1.5 !important;
 }
 .candidate-id {
     font-size: 0.7rem !important;
-    color: #86868b !important;
+    color: #8c9ba5 !important;
     font-family: Menlo, Monaco, monospace !important;
     word-break: break-all !important;
-    margin-bottom: 0.8rem !important;
+    margin-bottom: 0.75rem !important;
 }
 
-/* ── Apple Rounded Pills (Badges) ─────────────────────────────────── */
+/* ── SBI Pillar Pill Badges ────────────────────────────────────────── */
 .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.75rem; }
 .badge {
     display: inline-block !important;
     font-size: 0.68rem !important;
-    font-weight: 500 !important;
-    border-radius: 980px !important;
-    padding: 3px 10px !important;
-    letter-spacing: 0.01em !important;
-    border: none !important;
+    font-weight: 600 !important;
+    border-radius: 4px !important;
+    padding: 2px 8px !important;
+    letter-spacing: 0.02em !important;
 }
-.badge-blue  { background: #e8f2fc !important; color: #0071e3 !important; }
-.badge-green { background: #eaf6ed !important; color: #1d803f !important; }
-.badge-purple{ background: #f4ecf9 !important; color: #8622c3 !important; }
-.badge-gray  { background: #f5f5f7 !important; color: #1d1d1f !important; }
+.badge-blue  { background: #e8f1f7 !important; color: #0a3a60 !important; border: 1px solid #c2d6e3 !important; }
+.badge-green { background: #eaf6ed !important; color: #1d803f !important; border: 1px solid #cce8d5 !important; }
+.badge-purple{ background: #f4ecf9 !important; color: #8622c3 !important; border: 1px solid #e2d2f0 !important; }
+.badge-gray  { background: #f4f8fb !important; color: #536878 !important; border: 1px solid #d0e0ed !important; }
 
-/* ── Stat Tiles ────────────────────────────────────────────────────── */
+/* ── SBI Corporate Stat Tiles ──────────────────────────────────────── */
 .stat-tile {
     background: #ffffff !important;
-    border: 1px solid #e5e5e7 !important;
-    border-radius: 12px !important;
-    padding: 1.1rem 1.3rem !important;
+    border: 1px solid #d0e0ed !important;
+    border-radius: 8px !important;
+    padding: 1rem 1.2rem !important;
     text-align: center !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.01) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
     transition: all 0.2s ease !important;
 }
 .stat-tile:hover {
-    border-color: #d2d2d7 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+    border-color: #0a3a60 !important;
+    box-shadow: 0 3px 8px rgba(10,58,96,0.06) !important;
 }
 .stat-value {
-    font-size: 1.7rem !important;
+    font-size: 1.55rem !important;
     font-weight: 700 !important;
-    color: #1d1d1f !important;
-    letter-spacing: -0.02em !important;
+    color: #0a3a60 !important;
 }
 .stat-label {
-    font-size: 0.72rem !important;
-    color: #86868b !important;
+    font-size: 0.7rem !important;
+    color: #536878 !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    margin-top: 0.25rem !important;
+    letter-spacing: 0.04em !important;
+    margin-top: 0.2rem !important;
 }
 
-/* ── Apple-style Progress Indicator ────────────────────────────────── */
+/* ── SBI Blue & Cyan Progress Bar ──────────────────────────────────── */
 .conf-bar-wrap { margin: 0.5rem 0; }
 .conf-label {
-    font-size: 0.76rem !important;
-    color: #1d1d1f !important;
-    font-weight: 500 !important;
+    font-size: 0.74rem !important;
+    color: #0a3a60 !important;
+    font-weight: 600 !important;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 .conf-bar-bg {
-    background: #e5e5e7 !important;
-    border-radius: 100px !important;
-    height: 7px !important;
+    background: #ebf2f7 !important;
+    border-radius: 4px !important;
+    height: 8px !important;
     overflow: hidden !important;
 }
 .conf-bar-fill {
     height: 100% !important;
-    border-radius: 100px !important;
-    background: #0071e3 !important;
+    border-radius: 4px !important;
+    background: linear-gradient(90deg, #0a3a60, #00b8df) !important;
 }
 
 /* ── Detail Panel Header ────────────────────────────────────────────── */
 .detail-header {
     background: #ffffff !important;
-    border: none !important;
-    border-left: 5px solid #0071e3 !important;
-    border-radius: 14px !important;
-    padding: 1.25rem 1.75rem !important;
-    margin-bottom: 1.25rem !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid #d0e0ed !important;
+    border-left: 5px solid #0a3a60 !important;
+    border-radius: 8px !important;
+    padding: 1.1rem 1.5rem !important;
+    margin-bottom: 1.1rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
 }
 .detail-header .dh-name {
-    font-size: 1.25rem !important;
+    font-size: 1.2rem !important;
     font-weight: 700 !important;
-    color: #1d1d1f !important;
-    letter-spacing: -0.02em !important;
+    color: #0a3a60 !important;
 }
 .detail-header .dh-meta {
     font-size: 0.78rem !important;
-    color: #86868b !important;
-    margin-top: 0.3rem !important;
+    color: #536878 !important;
+    margin-top: 0.25rem !important;
     font-family: Menlo, Monaco, monospace !important;
 }
 
 /* ── Info Row ──────────────────────────────────────────────────────── */
-.info-row { margin-bottom: 0.7rem; }
+.info-row { margin-bottom: 0.6rem; }
 .info-label {
-    font-size: 0.72rem !important;
-    font-weight: 600 !important;
-    color: #86868b !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    color: #8c9ba5 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
+    letter-spacing: 0.04em !important;
 }
 .info-value {
-    font-size: 0.88rem !important;
+    font-size: 0.85rem !important;
     color: #1d1d1f !important;
-    margin-top: 2px !important;
-    font-weight: 400 !important;
+    margin-top: 1px !important;
+    font-weight: 600 !important;
 }
 
-/* ── Apple Store Spec Chips (Skills) ────────────────────────────────── */
+/* ── SBI Corporate Tag Chips (Skills) ──────────────────────────────── */
 .skill-chip {
     display: inline-block !important;
-    background: #f5f5f7 !important;
-    border: none !important;
-    border-radius: 980px !important;
-    padding: 6px 14px !important;
-    font-size: 0.78rem !important;
-    color: #1d1d1f !important;
-    margin: 4px 4px 0 0 !important;
-    font-weight: 500 !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
+    background: #e8f7fa !important;
+    border: 1px solid #bce6ee !important;
+    border-radius: 4px !important;
+    padding: 4px 10px !important;
+    font-size: 0.76rem !important;
+    color: #0088a5 !important;
+    margin: 3px 3px 0 0 !important;
+    font-weight: 600 !important;
 }
 .skill-conf {
     font-size: 0.68rem !important;
-    color: #86868b !important;
+    color: #0a3a60 !important;
     display: inline !important;
-    margin-left: 6px !important;
+    margin-left: 5px !important;
     font-family: Menlo, Monaco, monospace !important;
 }
 
-/* ── Apple-style Spec Timeline ────────────────────────────────────── */
+/* ── Timeline (Experience/Education) ──────────────────────────────── */
 .timeline-item {
-    border-left: 2px solid #e5e5e7 !important;
-    padding-left: 1.2rem !important;
-    margin-bottom: 1.5rem !important;
+    border-left: 2px solid #ebf2f7 !important;
+    padding-left: 1.1rem !important;
+    margin-bottom: 1.3rem !important;
     position: relative !important;
 }
 .timeline-item::before {
@@ -307,132 +302,128 @@ html, body, [class*="css"] {
     top: 5px !important;
     width: 8px !important;
     height: 8px !important;
-    background: #0071e3 !important;
+    background: #00b8df !important;
     border-radius: 50% !important;
 }
 .timeline-title {
-    font-size: 0.92rem !important;
-    font-weight: 600 !important;
-    color: #1d1d1f !important;
-    letter-spacing: -0.01em !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #0a3a60 !important;
 }
 .timeline-sub {
-    font-size: 0.8rem !important;
-    color: #86868b !important;
+    font-size: 0.78rem !important;
+    color: #536878 !important;
     margin-top: 2px !important;
 }
 .timeline-date {
     font-size: 0.72rem !important;
-    color: #86868b !important;
+    color: #8c9ba5 !important;
     font-family: Menlo, Monaco, monospace !important;
-    margin-top: 3px !important;
+    margin-top: 2px !important;
 }
 .timeline-body {
-    font-size: 0.82rem !important;
-    color: #1d1d1f !important;
-    margin-top: 0.5rem !important;
+    font-size: 0.8rem !important;
+    color: #334155 !important;
+    margin-top: 0.4rem !important;
     line-height: 1.55 !important;
 }
 
-/* ── Streamlit UI Controls (Apple Style Overrides) ───────────────────── */
+/* ── Streamlit UI Controls (SBI Custom Overrides) ───────────────────── */
 .stButton > button {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif !important;
-    font-weight: 500 !important;
-    border-radius: 980px !important; /* Pill style */
-    padding: 8px 18px !important;
-    font-size: 0.85rem !important;
-    letter-spacing: -0.01em !important;
-    transition: all 0.2s ease-in-out !important;
+    font-family: "Open Sans", sans-serif !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    padding: 6px 16px !important;
+    font-size: 0.82rem !important;
+    transition: all 0.2s ease !important;
 }
 .stButton > button[kind="primary"] {
-    background: #0071e3 !important; /* Apple Blue */
+    background: #0a3a60 !important; /* SBI Blue */
     border: none !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.15) !important;
+    box-shadow: 0 2px 4px rgba(10,58,96,0.15) !important;
 }
 .stButton > button[kind="primary"]:hover {
-    background: #0077ed !important;
-    box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25) !important;
+    background: #00549c !important;
     transform: translateY(-1px) !important;
 }
 .stButton > button[kind="secondary"] {
-    background: #f5f5f7 !important;
-    border: none !important;
-    color: #1d1d1f !important;
+    background: #e8f7fa !important; /* Light Teal fill */
+    border: 1px solid #bce6ee !important;
+    color: #0088a5 !important;
 }
 .stButton > button[kind="secondary"]:hover {
-    background: #e8e8ed !important;
-    color: #1d1d1f !important;
+    background: #d0f0f5 !important;
+    color: #0088a5 !important;
 }
 
 /* ── Metrics Overrides ─────────────────────────────────────────────── */
 div[data-testid="stMetricValue"] {
-    font-size: 1.25rem !important;
+    font-size: 1.2rem !important;
     font-weight: 700 !important;
-    color: #1d1d1f !important;
-    letter-spacing: -0.02em !important;
+    color: #0a3a60 !important;
 }
 div[data-testid="stMetricLabel"] {
-    font-size: 0.72rem !important;
-    color: #86868b !important;
+    font-size: 0.7rem !important;
+    color: #8c9ba5 !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.05em !important;
 }
 
 /* ── Progress Indicators ───────────────────────────────────────────── */
-.stProgress > div > div { background-color: #0071e3 !important; border-radius: 100px !important; }
+.stProgress > div > div { background-color: #00b8df !important; border-radius: 4px !important; }
 
-/* ── Tabs Overrides (Pill style switcher) ─────────────────────────── */
+/* ── Tabs Overrides ────────────────────────────────────────────────── */
 .stTabs [data-baseweb="tab-list"] {
     gap: 0 !important;
-    border-bottom: 1px solid #e5e5e7 !important;
+    border-bottom: 2px solid #ebf2f7 !important;
     background: transparent !important;
     margin-bottom: 1rem !important;
 }
 .stTabs [data-baseweb="tab"] {
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    color: #86868b !important;
-    padding: 0.6rem 1.2rem !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #536878 !important;
+    padding: 0.55rem 1.1rem !important;
     border-radius: 0 !important;
     border: none !important;
     background: transparent !important;
 }
 .stTabs [aria-selected="true"] {
-    color: #0071e3 !important;
-    border-bottom: 2px solid #0071e3 !important;
-    font-weight: 600 !important;
+    color: #0a3a60 !important;
+    border-bottom: 3px solid #00b8df !important;
+    font-weight: 700 !important;
 }
 
 /* ── Form Input Fields ─────────────────────────────────────────────── */
 .stTextInput > div > div > input {
-    border-radius: 10px !important;
+    border-radius: 6px !important;
     background-color: #ffffff !important;
-    border: 1px solid #d2d2d7 !important;
-    font-size: 0.85rem !important;
-    color: #1d1d1f !important;
-    padding: 8px 12px !important;
+    border: 1px solid #d0e0ed !important;
+    font-size: 0.83rem !important;
+    color: #0a3a60 !important;
+    padding: 6px 10px !important;
 }
 .stTextInput > div > div > input:focus {
-    border-color: #0071e3 !important;
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15) !important;
+    border-color: #0a3a60 !important;
+    box-shadow: 0 0 0 3px rgba(10,58,96,0.12) !important;
 }
 .stFileUploader {
-    border-radius: 12px !important;
-    font-size: 0.83rem !important;
-    border: 1px dashed #d2d2d7 !important;
+    border-radius: 8px !important;
+    font-size: 0.82rem !important;
+    border: 1px dashed #d0e0ed !important;
     background-color: #ffffff !important;
-    padding: 0.5rem !important;
+    padding: 0.4rem !important;
 }
 .stAlert {
-    border-radius: 12px !important;
-    font-size: 0.85rem !important;
+    border-radius: 8px !important;
+    font-size: 0.83rem !important;
     border: none !important;
 }
 
-[data-testid="stDataFrame"] { border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e7; }
-hr { border-color: #e5e5e7 !important; margin: 1.25rem 0 !important; }
+[data-testid="stDataFrame"] { border-radius: 8px; overflow: hidden; border: 1px solid #d0e0ed; }
+hr { border-color: #ebf2f7 !important; margin: 1.1rem 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -634,7 +625,7 @@ st.markdown("""
     <div class="nav-meta">Recruiter Portal &nbsp;&middot;&nbsp; Candidate Ingestion</div>
 </div>
 <div class="apple-banner">
-    Save hours on candidate screening. Ingest and cross-verify candidates from multiple sources in real-time.
+    🔒 Secure Talent Portal: Always verify candidate provenance logs. Reconciling multi-source data in compliance with enterprise audit policies.
 </div>
 """, unsafe_allow_html=True)
 
