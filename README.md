@@ -216,6 +216,14 @@ python3 -m src.main --ats data/ats.json --resume data/resume.docx --csv data/rec
 - `--config`: Path to projection config JSON (default: `configs/default.json`)
 - `--output`: Path to save the final projected profile (default: `output/candidate_profile.json`)
 
+### Running the Streamlit Web UI
+
+You can launch a local interactive web interface to upload files and see generated profiles:
+
+```bash
+streamlit run app.py
+```
+
 ### Running with Docker
 
 Build the Docker image:
@@ -229,6 +237,7 @@ Run the container (runs default files inside the container):
 ```bash
 docker run --rm -v $(pwd)/output:/app/output candidate-transformer
 ```
+
 
 
 ---

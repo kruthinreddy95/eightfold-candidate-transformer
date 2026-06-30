@@ -8,7 +8,11 @@ import json
 import logging
 import os
 import argparse
+import sys
 from datetime import datetime
+
+if __package__ in (None, ""):
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.parsers.ats_parser import parse as parse_ats
 from src.parsers.resume_parser import parse_resume
