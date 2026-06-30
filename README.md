@@ -12,48 +12,67 @@ The engine features robust confidence-based conflict resolution, agreement-based
 
 ---
 
-## Architecture Flow
+## Architecture & Processing Flow
 
-```text
-  [Structured Inputs]                      [Unstructured Inputs]
- ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
- │ Recruiter CSV    │ │ ATS JSON         │ │ GitHub URL       │ │ LinkedIn URL     │
- └────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘
-          │                    │                    │                    │
-          └────────────────────┼─────────┬──────────┘                    │
-                               │         │                               │
-                               │         │  ┌──────────────────┐ ┌───────┴──────────┐
-                               │         │  │ Resume (.docx)   │ │ Recruiter Notes  │
-                               │         │  └────────┬─────────┘ └───────┬──────────┘
-                               │         │           │                   │
-                               ▼         ▼           ▼                   ▼
-                            ┌──────────────────────────────────────────────┐
-                            │                   Parsers                    │
-                            └──────────────────────┬───────────────────────┘
-                                                   │
-                                                   ▼
-                            ┌──────────────────────────────────────────────┐
-                            │                 Normalizer                   │
-                            └──────────────────────┬───────────────────────┘
-                                                   │
-                                                   ▼
-                            ┌──────────────────────────────────────────────┐
-                            │                Merge Engine                  │
-                            └──────────────────────┬───────────────────────┘
-                                                   │
-                                                   ▼
-                            ┌──────────────────────────────────────────────┐
-                            │                  Validator                   │
-                            └──────────────────────┬───────────────────────┘
-                                                   │
-                                                   ▼
-                            ┌──────────────────────────────────────────────┐
-                            │                  Projector                   │
-                            └──────────────────────┬───────────────────────┘
-                                                   │
-                                                   ▼
-                                        Candidate Profile JSON
+The platform utilizes a structured, 5-stage transformation pipeline to clean, reconcile, and reshape candidate profiles. 
+
+### Pipeline Diagram
+```mermaid
+graph TD
+    classDef inputStyle fill:#f8fafc,stroke:#64748b,stroke-width:2px,color:#334155,stroke-dasharray: 4 4;
+    classDef processStyle fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e40af;
+    classDef outputStyle fill:#f0fdf4,stroke:#166534,stroke-width:2px,color:#14532d;
+    classDef configStyle fill:#faf5ff,stroke:#6b21a8,stroke-width:2px,color:#581c87;
+
+    %% Data Sources
+    subgraph Sources ["1. Heterogeneous Sources (Inputs)"]
+        direction LR
+        CSV[Recruiter CSV]:::inputStyle
+        ATS[ATS JSON]:::inputStyle
+        RES[Resume DOCX/PDF/TXT]:::inputStyle
+        NTS[Recruiter Notes]:::inputStyle
+        GH[GitHub URL]:::inputStyle
+        LI[LinkedIn URL]:::inputStyle
+    end
+
+    %% Pipeline Stages
+    subgraph Engine ["2. Candidate Ingestion Pipeline"]
+        direction TB
+        PAR[Parsers <br/> Extract raw attributes]:::processStyle
+        NOR[Normalizer <br/> Standardize formats: E.164, ISO country, YYYY-MM]:::processStyle
+        MRG[Merge Engine <br/> Conflict resolution, agreement boosting]:::processStyle
+        VAL[Validator <br/> Check canonical profile constraints]:::processStyle
+        PRJ[Projector <br/> Custom schema remapping & missing strategy]:::processStyle
+    end
+
+    CFG[Runtime Config JSON]:::configStyle
+    OUT[Projected Candidate Profile JSON]:::outputStyle
+
+    %% Flows
+    CSV & ATS & RES & NTS & GH & LI --> PAR
+    PAR --> NOR
+    NOR --> MRG
+    MRG --> VAL
+    VAL --> PRJ
+    CFG --> PRJ
+    PRJ --> OUT
 ```
+
+### Stage-by-Stage Processing Details
+
+| Stage | Component | Core Responsibility | Input Format | Output Format |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | **Parsers** | Direct attribute extraction using regex patterns and metadata heuristics. | Heterogeneous files & URLs | Raw, tagged dictionary keys |
+| **2** | **Normalizer** | Standardizes names, E.164 phones, ISO-3166-1 country codes, and YYYY-MM date stamps. | Raw parsed inputs | Standardized tagged keys |
+| **3** | **Merge Engine** | Resolves conflicts using confidence scores and boosts confidence when sources agree. | Standardized tagged keys | Canonical Candidate Record |
+| **4** | **Validator** | Dual-validation layer verifying the profile conforms to the Pydantic schema constraints. | Canonical Record | Confirmed Clean Profile |
+| **5** | **Projector** | Reshapes output fields, handles missing values, and renames/remaps paths per runtime config. | Clean Profile + Config | Projected JSON Profile |
+
+#### Key Technical Design Pillars:
+* **Explainability**: The output contains a detailed `provenance` log tracking the precise source and normalization method used for every resolved field.
+* **Deterministic Behavior**: The system ensures identical input datasets will always yield the identical candidate profiles.
+* **State Isolation**: Independent candidate pipelines are fully decoupled. Resets prevent profile data bleeding or contamination.
+* **Robust Degradation**: A corrupted or missing data source will not crash the pipeline; the system records missing entries gracefully.
 
 ---
 
